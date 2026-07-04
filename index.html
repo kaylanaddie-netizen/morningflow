@@ -2,1011 +2,617 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Morning Flow">
-<meta name="theme-color" content="#faf8f4">
-<title>Morning Flow</title>
+<title>Hue — Your Style, Curated</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:#faf8f4;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:#3d2e24;overflow:hidden;}
-#app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto;background:#faf8f4;}
-#top-pad{height:env(safe-area-inset-top,20px);background:#faf8f4;flex-shrink:0;}
-#screens{flex:1;position:relative;overflow:hidden;min-height:0;}
-.scr{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 18px 28px;display:none;flex-direction:column;background:#faf8f4;}
-.scr.on{display:flex;}
-#tabbar{display:flex;background:#fff;border-top:1px solid #e8e0d4;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,8px);}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 0 5px;cursor:pointer;gap:2px;}
-.tab:active{opacity:.6;}
-.tab-i{font-size:21px;line-height:1;}
-.tab-l{font-size:9px;color:#b09888;}
-.tab.on .tab-l{color:#8b5e3c;font-weight:700;}
-.greeting{font-size:13px;color:#b09888;margin-bottom:2px;}
-.bigtime{font-size:40px;font-weight:300;color:#3d2e24;letter-spacing:-1px;margin-bottom:18px;}
-.sec-h{font-size:19px;font-weight:600;color:#3d2e24;margin-bottom:3px;}
-.sec-s{font-size:12px;color:#b09888;margin-bottom:14px;}
-.eyebrow{font-size:10px;color:#8b5e3c;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;justify-content:space-between;}
-.ey-act{font-size:10px;color:#8b5e3c;cursor:pointer;padding:3px 9px;border:1px solid #c4a882;border-radius:8px;text-transform:none;letter-spacing:0;font-weight:600;}
-.big-card{background:#fff;border-radius:24px;border:1px solid #e8e0d4;padding:40px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;margin-bottom:18px;min-height:200px;transition:transform .15s;}
-.bc-em{font-size:52px;line-height:1;}
-.bc-nm{font-size:24px;font-weight:500;color:#3d2e24;line-height:1.2;}
-.bc-dr{font-size:13px;color:#b09888;}
-.dots{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;max-width:260px;align-self:center;}
-.dot{width:7px;height:7px;border-radius:50%;background:#e8e0d4;transition:all .3s;flex-shrink:0;}
-.dot.done{background:#c4a882;}
-.dot.cur{background:#8b5e3c;width:18px;border-radius:4px;}
-.btn{background:#8b5e3c;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;transition:transform .1s,opacity .1s;}
-.btn:active{transform:scale(.97);opacity:.88;}
-.btn-soft{background:#f3ece4;color:#8b5e3c;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;}
-.btn-soft:active{opacity:.8;}
-.btn-ghost{background:transparent;color:#b09888;border:none;font-size:13px;cursor:pointer;padding:7px;width:100%;}
-.btn-outline{background:transparent;color:#8b5e3c;border:1.5px solid #8b5e3c;border-radius:14px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;width:100%;transition:all .15s;}
-.btn-outline:active{background:#8b5e3c;color:#fff;}
-.not-btn{background:transparent;color:#b09888;border:1px solid #e8e0d4;border-radius:9px;padding:4px 9px;font-size:11px;cursor:pointer;flex-shrink:0;}
-.not-btn:active{border-color:#8b5e3c;color:#8b5e3c;}
-.row{display:flex;align-items:center;gap:10px;padding:13px 14px;background:#fff;border-radius:14px;margin-bottom:7px;border:1px solid #e8e0d4;user-select:none;transition:transform .1s;}
-.row:active{transform:scale(.98);}
-.row.done-row{opacity:.4;}
-.row.done-row .row-text{text-decoration:line-through;}
-.row-em{font-size:20px;flex-shrink:0;}
-.row-text{font-size:15px;color:#3d2e24;flex:1;}
-.row-sub{font-size:11px;color:#b09888;margin-top:1px;}
-.chk{width:24px;height:24px;border-radius:50%;border:2px solid #e8e0d4;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:all .2s;}
-.chk.on{background:#8b5e3c;border-color:#8b5e3c;color:#fff;}
-.chk.amber.on{background:#c4a882;border-color:#c4a882;}
-.pb{font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.pb1{background:#fce9e9;color:#c97a7a;}
-.pb2{background:#fdf0e4;color:#8b4e10;}
-.pb3{background:#f0ebf8;color:#6b3f9e;}
-.done-banner{background:#e8f0e4;border-radius:16px;padding:15px;text-align:center;margin-bottom:14px;}
-.done-banner .dt{font-size:15px;font-weight:600;color:#3d6e28;}
-.done-banner .ds{font-size:12px;color:#5a9e40;margin-top:2px;}
-.focus-pin{background:linear-gradient(135deg,#3d2e24,#6b4a30);border-radius:16px;padding:16px;margin-bottom:14px;color:#fff;cursor:pointer;}
-.focus-lbl{font-size:10px;opacity:.55;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
-.focus-text{font-size:17px;font-weight:500;}
-.focus-sub{font-size:11px;opacity:.45;margin-top:4px;}
-.momentum{background:#f3ece4;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.m-n{font-size:28px;font-weight:700;color:#8b5e3c;line-height:1;}
-.m-l{font-size:12px;color:#7a6558;line-height:1.5;}
-/* TIMER */
-.timer-card{background:#fff;border-radius:18px;border:1px solid #e8e0d4;padding:18px;text-align:center;margin-bottom:14px;}
-.timer-display{font-size:44px;font-weight:300;color:#8b5e3c;letter-spacing:2px;font-variant-numeric:tabular-nums;}
-.timer-label{font-size:12px;color:#b09888;margin-bottom:12px;}
-.timer-btns{display:flex;gap:8px;}
-.timer-btns .btn{margin-bottom:0;}
-.timer-btns .btn-soft{margin-bottom:0;}
-/* SHUFFLE */
-.shuffle-card{background:linear-gradient(135deg,#5a3f2a,#8b5e3c);border-radius:18px;padding:22px;text-align:center;color:#fff;margin-bottom:12px;}
-.sh-em{font-size:42px;margin-bottom:8px;}
-.sh-nm{font-size:20px;font-weight:500;margin-bottom:3px;}
-.sh-sub{font-size:11px;opacity:.6;}
-/* AFTERNOON */
-.aft-section{background:#f0ebf8;border-radius:16px;padding:16px;margin-top:4px;}
-.aft-title{font-size:13px;font-weight:600;color:#6b3f9e;margin-bottom:10px;}
-/* EVENING */
-.eve-section{background:#f3ece4;border-radius:16px;padding:16px;margin-top:4px;}
-.eve-title{font-size:13px;font-weight:600;color:#8b5e3c;margin-bottom:10px;}
-/* CAPTURE */
-.cap-wrap{background:#fff;border-radius:16px;border:1px solid #e8e0d4;padding:14px;margin-bottom:12px;}
-.cap-ta{border:none;background:transparent;width:100%;font-size:15px;color:#3d2e24;resize:none;outline:none;font-family:inherit;line-height:1.6;}
-.cap-ta::placeholder{color:#c8b8a8;}
-.mic-btn{width:40px;height:40px;background:#8b5e3c;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:none;cursor:pointer;flex-shrink:0;}
-.mic-btn.rec{background:#c97a7a;animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,122,122,.4)}50%{box-shadow:0 0 0 8px rgba(201,122,122,0)}}
-.cap-item{background:#fff;border-radius:13px;border:1px solid #e8e0d4;padding:12px 14px;margin-bottom:8px;}
-.cap-item-text{font-size:14px;color:#3d2e24;margin-bottom:10px;font-weight:500;}
-.cap-controls{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
-.pri-opt{padding:6px 10px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e8e0d4;background:#fff;transition:all .15s;flex-shrink:0;}
-.pri-opt.p1{background:#fce9e9;border-color:#c97a7a;color:#c97a7a;}
-.pri-opt.p2{background:#fdf0e4;border-color:#8b4e10;color:#8b4e10;}
-.pri-opt.p3{background:#f0ebf8;border-color:#6b3f9e;color:#6b3f9e;}
-.rec-toggle{padding:6px 10px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e8e0d4;background:#fff;color:#b09888;transition:all .15s;}
-.rec-toggle.on{background:#e8f0e4;border-color:#3d6e28;color:#3d6e28;}
-.save-cap-btn{padding:6px 12px;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;background:#8b5e3c;color:#fff;border:none;margin-left:auto;}
-.f-in{width:100%;border:1px solid #e8e0d4;border-radius:10px;padding:10px 13px;font-size:14px;color:#3d2e24;background:#faf8f4;outline:none;margin-bottom:8px;font-family:inherit;}
-.f-in:focus{border-color:#8b5e3c;}
-.f-sel{width:100%;border:1px solid #e8e0d4;border-radius:10px;padding:10px 13px;font-size:14px;color:#3d2e24;background:#faf8f4;outline:none;margin-bottom:8px;font-family:inherit;}
-.f-row{display:flex;gap:8px;}
-.drag-row{display:flex;align-items:center;gap:8px;padding:11px 12px;background:#fff;border-radius:12px;margin-bottom:6px;border:1px solid #e8e0d4;}
-.drag-handle{font-size:18px;color:#c4a882;cursor:grab;touch-action:none;padding:0 4px;flex-shrink:0;}
-.drag-em{font-size:20px;flex-shrink:0;}
-.drag-text{font-size:14px;color:#3d2e24;flex:1;line-height:1.4;}
-.del-btn{background:none;border:none;font-size:16px;color:#e0c8b8;cursor:pointer;padding:4px;flex-shrink:0;}
-.del-btn:active{color:#c97a7a;}
-.modal-bg{position:fixed;inset:0;background:rgba(61,46,36,.45);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
-.modal-bg.on{display:flex;}
-.modal{background:#faf8f4;border-radius:28px 28px 0 0;padding:24px 20px calc(28px + env(safe-area-inset-bottom,0px));width:100%;max-width:480px;animation:up .3s ease;max-height:85vh;overflow-y:auto;}
-@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:40px;height:4px;background:#e8e0d4;border-radius:2px;margin:0 auto 18px;}
-.modal-title{font-size:17px;font-weight:600;color:#3d2e24;margin-bottom:14px;}
-.ov-card{background:#fce9e9;border-radius:20px;padding:20px;text-align:center;margin-bottom:18px;}
-.divider{height:1px;background:#f0e8de;margin:12px 0;}
-.day-tabs{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;}
-.day-tab{padding:7px 12px;border-radius:20px;font-size:12px;font-weight:500;color:#b09888;cursor:pointer;white-space:nowrap;border:1px solid #e8e0d4;background:#fff;flex-shrink:0;transition:all .15s;}
-.day-tab.on{background:#8b5e3c;color:#fff;border-color:#8b5e3c;}
-.settings-block{margin-bottom:22px;}
-.settings-block-title{font-size:14px;font-weight:600;color:#3d2e24;margin-bottom:3px;}
-.settings-block-sub{font-size:11px;color:#b09888;margin-bottom:10px;}
-.pad{height:20px;flex-shrink:0;}
+  :root{
+    --bg:#EFE3CC;
+    --bg-deep:#E4D4B4;
+    --cream:#F6EEDD;
+    --ivory:#FFFDF8;
+    --card:#FFFFFF;
+    --rose:#C9938E;
+    --sage:#93A578;
+    --taupe:#B79E7E;
+    --berry:#8F5A63;
+    --ink:#211C17;
+    --ink-soft:#8A7C69;
+    --ink-faint:#B8A98C;
+    --line:#E6D8B9;
+    --black:#1C1712;
+    --radius-lg:26px;
+    --radius-md:18px;
+    --radius-sm:12px;
+    --shadow-soft:0 8px 26px rgba(90,70,40,0.12);
+    --shadow-lift:0 16px 44px rgba(60,45,25,0.22);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,#DCCBA6 0%, #CBB98F 100%);
+    font-family:'Manrope',sans-serif; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px 12px;
+  }
+  .device{
+    width:400px; max-width:100%; height:840px; background:var(--bg);
+    border-radius:44px; box-shadow:0 30px 80px rgba(50,35,15,0.35), 0 0 0 10px #DCC9A0, 0 0 0 12px #b39c72;
+    overflow:hidden; position:relative; display:flex; flex-direction:column;
+  }
+  .notch{ position:absolute; top:0; left:50%; transform:translateX(-50%); width:150px; height:26px; background:#DCC9A0; border-radius:0 0 18px 18px; z-index:60; }
+  .screen{ flex:1; overflow-y:auto; overflow-x:hidden; scrollbar-width:none; display:flex; flex-direction:column; animation:fadeIn .4s ease; position:relative; }
+  .screen::-webkit-scrollbar{display:none;}
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  h1,h2,h3,.serif{ font-family:'Cormorant Garamond',serif; font-weight:600; color:var(--ink); margin:0; }
+  .eyebrow{ font-family:'Manrope'; font-size:10.5px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; }
+
+  .btn-black{ background:var(--black); color:#fff; border:none; border-radius:100px; padding:16px 26px; font-family:'Manrope'; font-weight:700; font-size:14.5px; cursor:pointer; box-shadow:0 10px 22px rgba(20,15,8,0.28); transition:transform .15s ease; }
+  .btn-black:active{ transform:scale(0.96); }
+  .btn-secondary{ background:var(--ivory); color:var(--ink); border:1.5px solid var(--line); border-radius:100px; padding:15px 26px; font-family:'Manrope'; font-weight:600; font-size:14px; cursor:pointer; transition:transform .15s ease;}
+  .btn-secondary:active{ transform:scale(0.96); }
+  .btn-text{ background:none; border:none; color:var(--ink-soft); font-family:'Manrope'; font-weight:600; font-size:13px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+  .top-bar{ display:flex; align-items:center; justify-content:space-between; padding:20px 22px 6px; }
+  .icon-btn{ width:36px;height:36px;border-radius:50%; background:var(--ivory); border:1px solid var(--line); display:flex;align-items:center;justify-content:center; cursor:pointer; color:var(--ink); flex-shrink:0; }
+  .icon-btn.dark{ background:var(--black); color:#fff; border:none; }
+
+  .bottom-nav{ display:flex; justify-content:space-around; align-items:center; background:var(--ivory); border-top:1px solid var(--line); padding:10px 6px calc(env(safe-area-inset-bottom,0) + 10px); z-index:40; }
+  .nav-item{ display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; color:var(--ink-faint); font-size:10px; font-weight:700; padding:4px 8px; border-radius:14px; transition:all .2s ease;}
+  .nav-item.active{ color:#fff; background:var(--black); }
+  .nav-item svg{ width:20px; height:20px; }
+
+  .card{ background:var(--card); border-radius:var(--radius-md); box-shadow:var(--shadow-soft); }
+  .chip{ padding:9px 15px; border-radius:100px; border:1.5px solid var(--line); background:var(--ivory); font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; transition:all .2s ease; white-space:nowrap;}
+  .chip.selected{ background:var(--black); color:#fff; border-color:var(--black); }
+
+  .stars{ display:inline-flex; gap:1px; vertical-align:middle; }
+  .product-card{ background:var(--card); border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-soft); cursor:pointer; transition:transform .15s ease; }
+  .product-card:active{ transform:scale(0.97); }
+  .product-visual{ aspect-ratio:1/1.15; display:flex; align-items:center; justify-content:center; position:relative; }
+  .badge-pill{ position:absolute; top:9px; left:9px; background:rgba(28,23,18,0.85); border-radius:100px; padding:4px 10px; font-size:9.5px; font-weight:800; color:#fff; display:flex; align-items:center; gap:3px; }
+  .corner-btn{ position:absolute; top:9px; right:9px; width:28px;height:28px;border-radius:50%; background:rgba(255,253,250,0.92); display:flex;align-items:center;justify-content:center; color:var(--ink); cursor:pointer; }
+  .corner-btn.saved{ color:var(--berry); }
+  ::-webkit-scrollbar{ width:0; height:0; }
 </style>
 </head>
 <body>
-<div id="app">
-  <div id="top-pad"></div>
-  <div id="screens">
-
-    <!-- TODAY -->
-    <div class="scr on" id="scr-today">
-      <div class="greeting" id="greeting">Good morning, Addie</div>
-      <div class="bigtime" id="clock">--:-- --</div>
-
-      <!-- PHASE A: morning one at a time -->
-      <div id="phase-fixed">
-        <div style="font-size:10px;color:#b09888;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;">Morning essentials — one at a time</div>
-        <div class="big-card" id="fixed-card">
-          <div class="bc-em" id="fc-em">🌿</div>
-          <div class="bc-nm" id="fc-nm">Loading…</div>
-          <div class="bc-dr" id="fc-dr"></div>
-        </div>
-        <div class="dots" id="fixed-dots"></div>
-
-        <!-- 10-min tidy timer — shows on tidy up step -->
-        <div class="timer-card" id="tidy-timer" style="display:none;">
-          <div class="timer-label">Tidy Up Timer</div>
-          <div class="timer-display" id="timer-display">10:00</div>
-          <div class="timer-btns" style="margin-top:12px;">
-            <button class="btn" onclick="timerStart()" id="timer-start-btn" style="margin-bottom:0;">▶ Start</button>
-            <button class="btn-soft" onclick="timerReset()" style="margin-bottom:0;">Reset</button>
-          </div>
-        </div>
-
-        <button class="btn" onclick="doneFixed()">Done ✓</button>
-        <button class="btn-soft" onclick="skipFixed()">Skip for now</button>
-        <div class="momentum" style="margin-top:4px;">
-          <div class="m-n" id="fixed-count">0</div>
-          <div class="m-l">of <span id="fixed-total">0</span><br>morning steps done</div>
-        </div>
-      </div>
-
-      <!-- PHASE B: big 3 + afternoon + evening -->
-      <div id="phase-main" style="display:none;">
-        <div class="done-banner"><div class="dt">Morning complete ✓</div><div class="ds" id="morning-sub">All done 🌸</div></div>
-        <div class="momentum"><div class="m-n" id="m-count">0</div><div class="m-l">tasks completed<br>today ✨</div></div>
-        <div id="focus-pin-wrap"></div>
-        <div class="eyebrow"><span>⭐ Today's priorities</span><span class="ey-act" onclick="openModal('add-task')">+ Add</span></div>
-        <div id="top3-list"></div>
-        <div class="divider"></div>
-        <div class="eyebrow"><span>📋 Other tasks</span></div>
-        <div id="other-list"></div>
-
-        <!-- shuffle — after top3 done -->
-        <div id="shuffle-section" style="display:none;">
-          <div class="divider"></div>
-          <div style="text-align:center;margin-bottom:10px;">
-            <div style="font-size:13px;color:#b09888;margin-bottom:8px;">Priorities done! Want to keep going?</div>
-            <button class="btn-soft" onclick="doShuffle()">🎲 Shuffle a bonus task</button>
-          </div>
-        </div>
-
-        <!-- afternoon routine — after top3 done -->
-        <div id="afternoon-section" style="display:none;">
-          <div class="divider"></div>
-          <div class="aft-section">
-            <div class="aft-title">🌤 Afternoon routine — one at a time</div>
-            <div class="big-card" id="aft-card" style="min-height:150px;padding:26px 20px;">
-              <div class="bc-em" id="ac-em">🧴</div>
-              <div class="bc-nm" id="ac-nm" style="font-size:20px;">Oil pull</div>
-            </div>
-            <div class="dots" id="aft-dots"></div>
-            <button class="btn" onclick="doneAft()">Done ✓</button>
-            <button class="btn-soft" onclick="skipAft()">Skip</button>
-          </div>
-        </div>
-
-        <!-- evening routine — after afternoon done -->
-        <div id="evening-section" style="display:none;">
-          <div class="divider"></div>
-          <div class="eve-section">
-            <div class="eve-title">🌙 Evening routine — one at a time</div>
-            <div class="big-card" id="eve-card" style="min-height:150px;padding:26px 20px;">
-              <div class="bc-em" id="ec-em">🪥</div>
-              <div class="bc-nm" id="ec-nm" style="font-size:20px;">Brush teeth</div>
-            </div>
-            <div class="dots" id="eve-dots"></div>
-            <button class="btn" onclick="doneEve()">Done ✓</button>
-            <button class="btn-soft" onclick="skipEve()">Skip</button>
-          </div>
-        </div>
-
-        <div style="margin-top:14px;padding:13px;background:#fce9e9;border-radius:14px;text-align:center;cursor:pointer;" onclick="goTo('ov')">
-          <div style="font-size:14px;font-weight:600;color:#c97a7a;">😮‍💨 I'm overwhelmed</div>
-          <div style="font-size:11px;color:#c97a7a;opacity:.7;margin-top:2px;">Reset to 3 basics</div>
-        </div>
-      </div>
-      <div class="pad"></div>
-    </div>
-
-    <!-- CAPTURE -->
-    <div class="scr" id="scr-capture">
-      <div class="sec-h">Capture</div>
-      <div class="sec-s">Speak or type tasks separated by pauses or slashes. Each becomes its own item.</div>
-      <div class="cap-wrap">
-        <textarea id="cap-ta" class="cap-ta" rows="5" placeholder="Do laundry / print library pics / return faucet / call dentist / pick up groceries…&#10;&#10;Or just speak naturally — tap the mic and pause briefly between tasks."></textarea>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #f0e8de;margin-top:8px;gap:10px;">
-          <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎤</button>
-          <div id="voice-live" style="flex:1;font-size:12px;color:#c4a882;font-style:italic;display:none;padding:0 6px;">Listening…</div>
-          <button class="btn" onclick="parseCapture()" style="width:auto;padding:10px 18px;margin-bottom:0;font-size:14px;">Parse →</button>
-        </div>
-      </div>
-      <div style="font-size:11px;color:#b09888;margin-bottom:12px;padding:0 2px;">
-        💡 Separate tasks with <b>/</b> or <b>commas</b> or just speak and pause between each one. No limit on how many you add.
-      </div>
-      <div id="cap-parsed" style="display:none;">
-        <div class="eyebrow">Rank each task — then save</div>
-        <div id="cap-items"></div>
-        <button class="btn" onclick="saveAllCaptured()" style="margin-top:4px;">Save all →</button>
-        <button class="btn-ghost" onclick="clearCapture()">Clear all</button>
-      </div>
-      <div class="pad"></div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="scr" id="scr-settings">
-      <div class="sec-h">Settings</div>
-      <div class="sec-s">Edit routines, weekly tasks, and shuffle playlist.</div>
-
-      <!-- morning -->
-      <div class="settings-block">
-        <div class="settings-block-title">🌅 Morning essentials</div>
-        <div class="settings-block-sub">Drag ⠿ to reorder · tap ✕ to remove</div>
-        <div id="fixed-drag-list"></div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:13px;margin-top:6px;">
-          <div class="f-row" style="margin-bottom:8px;">
-            <input id="fe-em" class="f-in" type="text" placeholder="Emoji" style="width:56px;text-align:center;font-size:18px;margin-bottom:0;">
-            <input id="fe-nm" class="f-in" type="text" placeholder="Task name" style="flex:1;margin-bottom:0;">
-          </div>
-          <input id="fe-dr" class="f-in" type="text" placeholder="Duration hint (optional)">
-          <button class="btn-soft" onclick="addFixedTask()" style="margin-bottom:0;">+ Add step</button>
-        </div>
-      </div>
-
-      <!-- afternoon -->
-      <div class="settings-block">
-        <div class="settings-block-title">🌤 Afternoon routine</div>
-        <div class="settings-block-sub">Appears after your Top priorities are done.</div>
-        <div id="aft-drag-list"></div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:13px;margin-top:6px;">
-          <div class="f-row" style="margin-bottom:8px;">
-            <input id="ae-em" class="f-in" type="text" placeholder="Emoji" style="width:56px;text-align:center;font-size:18px;margin-bottom:0;">
-            <input id="ae-nm" class="f-in" type="text" placeholder="Task name" style="flex:1;margin-bottom:0;">
-          </div>
-          <button class="btn-soft" onclick="addAftTask()" style="margin-bottom:0;">+ Add step</button>
-        </div>
-      </div>
-
-      <!-- evening -->
-      <div class="settings-block">
-        <div class="settings-block-title">🌙 Evening routine</div>
-        <div class="settings-block-sub">Appears after afternoon routine is done.</div>
-        <div id="eve-drag-list"></div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:13px;margin-top:6px;">
-          <div class="f-row" style="margin-bottom:8px;">
-            <input id="ee-em" class="f-in" type="text" placeholder="Emoji" style="width:56px;text-align:center;font-size:18px;margin-bottom:0;">
-            <input id="ee-nm" class="f-in" type="text" placeholder="Task name" style="flex:1;margin-bottom:0;">
-          </div>
-          <button class="btn-soft" onclick="addEveTask()" style="margin-bottom:0;">+ Add step</button>
-        </div>
-      </div>
-
-      <!-- weekly -->
-      <div class="settings-block">
-        <div class="settings-block-title">📆 Weekly tasks</div>
-        <div class="settings-block-sub">Set recurring tasks per day. These become your daily priorities.</div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:13px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:#8b5e3c;margin-bottom:8px;">📌 This week's focus</div>
-          <input id="focus-input" class="f-in" type="text" placeholder="e.g. Finish photography portfolio" style="margin-bottom:8px;">
-          <button class="btn-soft" onclick="saveFocus()" style="margin-bottom:0;font-size:13px;">Save focus</button>
-        </div>
-        <div class="day-tabs" id="day-tabs"></div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:12px;margin-bottom:10px;">
-          <div style="font-size:11px;color:#b09888;margin-bottom:4px;">Day theme / focus</div>
-          <input id="day-theme" class="f-in" type="text" placeholder="e.g. Reset and life admin" style="margin-bottom:0;">
-        </div>
-        <div class="eyebrow" style="margin-top:0;"><span>Tasks for <span id="sel-day-lbl">Monday</span></span><span class="ey-act" onclick="openModal('add-weekly')">+ Add</span></div>
-        <div id="weekly-day-list"></div>
-        <button class="btn-soft" onclick="saveWeeklyDay()" style="margin-top:6px;">Save <span id="save-day-lbl">Monday</span></button>
-      </div>
-
-      <!-- shuffle -->
-      <div class="settings-block">
-        <div class="settings-block-title">🎲 Shuffle playlist</div>
-        <div class="settings-block-sub">Bonus tasks after Top 3. Drag to reorder. All repeat weekly unless one-time.</div>
-        <div id="shuffle-drag-list"></div>
-        <div style="background:#fff;border-radius:14px;border:1px solid #e8e0d4;padding:13px;margin-top:6px;">
-          <div class="f-row" style="margin-bottom:8px;">
-            <input id="sh-em" class="f-in" type="text" placeholder="Emoji" style="width:56px;text-align:center;font-size:18px;margin-bottom:0;">
-            <input id="sh-nm" class="f-in" type="text" placeholder="Task name" style="flex:1;margin-bottom:0;">
-          </div>
-          <button class="btn-soft" onclick="addShuffleTask()" style="margin-bottom:0;">+ Add</button>
-        </div>
-      </div>
-
-      <button class="btn-outline" onclick="if(confirm('Reset all data?'))resetAll();">Reset all data</button>
-      <div class="pad"></div>
-    </div>
-
-    <!-- OVERWHELMED -->
-    <div class="scr" id="scr-ov">
-      <div class="ov-card">
-        <div style="font-size:32px;margin-bottom:8px;">🫁</div>
-        <div style="font-size:19px;font-weight:600;color:#8b2020;margin-bottom:4px;">Emergency restart</div>
-        <div style="font-size:13px;color:#c97a7a;">Everything else can wait.</div>
-      </div>
-      <div class="row" id="ov1" onclick="toggleOv(1)"><span class="row-em">💧</span><span class="row-text">Drink water</span><div class="chk" id="ovc1"></div></div>
-      <div class="row" id="ov2" onclick="toggleOv(2)"><span class="row-em">🪥</span><span class="row-text">Brush teeth</span><div class="chk" id="ovc2"></div></div>
-      <div class="row" id="ov3" onclick="toggleOv(3)"><span class="row-em">👗</span><span class="row-text">Get dressed</span><div class="chk" id="ovc3"></div></div>
-      <div style="background:#f3ece4;border-radius:14px;padding:16px;margin-top:20px;text-align:center;"><div style="font-size:14px;color:#7a6558;">Come back when you're ready. 💛</div></div>
-      <div style="margin-top:16px;"><button class="btn" onclick="goTo('today')">Back to today</button></div>
-      <div class="pad"></div>
-    </div>
-
-  </div>
-
-  <div id="tabbar">
-    <div class="tab on" id="tab-today" onclick="goTo('today')"><span class="tab-i">🌅</span><span class="tab-l">Today</span></div>
-    <div class="tab" id="tab-capture" onclick="goTo('capture')"><span class="tab-i">✏️</span><span class="tab-l">Capture</span></div>
-    <div class="tab" id="tab-settings" onclick="goTo('settings')"><span class="tab-i">⚙️</span><span class="tab-l">Settings</span></div>
-  </div>
-</div>
-
-<!-- MODALS -->
-<div class="modal-bg" id="modal-bg" onclick="closeModal()">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-handle"></div>
-    <div id="modal-add-task">
-      <div class="modal-title">Add a task for today</div>
-      <input id="at-name" class="f-in" type="text" placeholder="Task name">
-      <div style="font-size:11px;color:#b09888;margin-bottom:6px;">Priority</div>
-      <div style="display:flex;gap:6px;margin-bottom:10px;">
-        <div class="pri-opt" id="atp1" onclick="selAtPri(1)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🔴 High<br><span style="font-size:10px;font-weight:400;">P1 — today</span></div>
-        <div class="pri-opt" id="atp2" onclick="selAtPri(2)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🟠 Med<br><span style="font-size:10px;font-weight:400;">P2 — tomorrow</span></div>
-        <div class="pri-opt" id="atp3" onclick="selAtPri(3)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🟣 Low<br><span style="font-size:10px;font-weight:400;">P3 — tomorrow</span></div>
-      </div>
-      <button class="btn" onclick="addTaskToday()" style="margin-bottom:8px;">Add</button>
-      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
-    </div>
-    <div id="modal-add-weekly" style="display:none;">
-      <div class="modal-title">Add recurring task</div>
-      <div class="f-row" style="margin-bottom:8px;">
-        <input id="aw-em" class="f-in" type="text" placeholder="Emoji" style="width:56px;text-align:center;font-size:18px;margin-bottom:0;">
-        <input id="aw-nm" class="f-in" type="text" placeholder="Task name" style="flex:1;margin-bottom:0;">
-      </div>
-      <div style="font-size:11px;color:#b09888;margin-bottom:6px;margin-top:8px;">Priority</div>
-      <div style="display:flex;gap:6px;margin-bottom:10px;">
-        <div class="pri-opt" id="awp1" onclick="selAwPri(1)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🔴 P1</div>
-        <div class="pri-opt" id="awp2" onclick="selAwPri(2)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🟠 P2</div>
-        <div class="pri-opt" id="awp3" onclick="selAwPri(3)" style="flex:1;padding:9px;border-radius:10px;text-align:center;">🟣 P3</div>
-      </div>
-      <select id="aw-recur" class="f-sel">
-        <option value="weekly">Repeats every week</option>
-        <option value="once">One time only</option>
-      </select>
-      <button class="btn" onclick="addWeeklyTask()" style="margin-bottom:8px;">Add</button>
-      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
-    </div>
-    <div id="modal-shuffle" style="display:none;">
-      <div class="modal-title">🎲 Bonus task</div>
-      <div class="shuffle-card"><div class="sh-em" id="sh-em-d">⭐</div><div class="sh-nm" id="sh-nm-d">Task</div><div class="sh-sub">Bonus — no pressure!</div></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn" onclick="completeShuffleTask()" style="flex:1;margin-bottom:0;">Done ✓</button>
-        <button class="btn-soft" onclick="nextShuffleTask()" style="flex:1;margin-bottom:0;">Next one</button>
-      </div>
-      <button class="btn-ghost" onclick="closeModal()" style="margin-top:6px;">Not now</button>
-    </div>
-  </div>
+<div class="device">
+  <div class="notch"></div>
+  <div id="app" class="screen"></div>
 </div>
 
 <script>
-// ── DATA ─────────────────────────────────────────────────
-const DEF_FIXED=[
-  {e:'🫧',n:'Wash face',d:''},
-  {e:'🛏️',n:'Make bed',d:''},
-  {e:'🪥',n:'Brush teeth',d:''},
-  {e:'🏋️',n:'Workout',d:''},
-  {e:'🚿',n:'Shower',d:''},
-  {e:'💊',n:'Take supplements',d:''},
-  {e:'✨',n:'Face serum',d:''},
-  {e:'🧴',n:'Face moisturizer',d:''},
-  {e:'☀️',n:'Sunscreen',d:''},
-  {e:'🌿',n:'Put on deodorant',d:''},
-  {e:'🧴',n:'Body lotion',d:''},
-  {e:'👗',n:'Change clothes',d:''},
-  {e:'🍵',n:'Make tea',d:''},
-  {e:'🧹',n:'Tidy up for 10 minutes',d:'Use the timer below',isTidy:true},
+/* ================= DATA ================= */
+const PALETTE = [
+  {name:'Dusty Rose', hex:'#C9938E'}, {name:'Soft Sage', hex:'#9BAE85'}, {name:'Ivory', hex:'#F1E8D6'},
+  {name:'Warm Taupe', hex:'#B99B79'}, {name:'Muted Berry', hex:'#8F5A63'}, {name:'Dusty Blue', hex:'#8FA3AC'},
 ];
-const DEF_AFT=[
-  {e:'🫙',n:'Oil pull'},
-  {e:'🪨',n:'Gua sha'},
-  {e:'🫧',n:'Wash face'},
-  {e:'🪥',n:'Brush teeth'},
-  {e:'💧',n:'Fill 1 water jug'},
-  {e:'🍶',n:'Fill water bottle'},
-  {e:'🫖',n:'Fill tea kettle'},
-  {e:'📅',n:'Cross out day on calendar'},
-  {e:'🧹',n:'Tidy up for 5 minutes'},
+const AVOID = [ {name:'Neon Orange', hex:'#FF6A2B'}, {name:'Stark Black', hex:'#111111'}, {name:'Icy Blue', hex:'#B8E4F0'} ];
+const AESTHETICS = [
+  {name:'Clean Girl', hex:'#EFE6D8'}, {name:'Cottagecore', hex:'#C7C99A'}, {name:'Soft Feminine', hex:'#E7C6C0'},
+  {name:'Minimal', hex:'#DAD3C6'}, {name:'Scandinavian', hex:'#E3E0D6'}, {name:'Old Money', hex:'#B8A883'},
+  {name:'Quiet Luxury', hex:'#C9B79A'}, {name:'Streetwear', hex:'#B7ACA0'}, {name:'Dark Academia', hex:'#7C6A55'},
+  {name:'Coastal', hex:'#AFC4C4'}, {name:'Romantic', hex:'#D9A9A9'}, {name:'Boho', hex:'#C39A6B'},
 ];
-const DEF_EVE=[
-  {e:'🪥',n:'Brush teeth'},
-  {e:'🧴',n:'Skincare routine'},
-  {e:'👗',n:"Set out tomorrow's clothes"},
-  {e:'📋',n:"Review tomorrow's events"},
-  {e:'😴',n:'In bed by 10 PM'},
-];
-const DEF_SHUFFLE=[
-  {e:'💅',n:'File nails',recur:'weekly'},
-  {e:'👟',n:'Clean shoes',recur:'weekly'},
-  {e:'🛒',n:'Make grocery list',recur:'weekly'},
-  {e:'📧',n:'Clean the spam folder',recur:'weekly'},
-  {e:'📸',n:'Go through 100 photos',recur:'weekly'},
-  {e:'📬',n:'Organize emails 5 minutes',recur:'weekly'},
-  {e:'🖼️',n:'Organize photos on walls 5 minutes',recur:'weekly'},
-  {e:'📂',n:'Organize Google Drive 5 minutes',recur:'weekly'},
-  {e:'🗑️',n:'Delete 25 screenshots',recur:'weekly'},
-  {e:'📭',n:'Unsubscribe from 5 emails',recur:'weekly'},
-  {e:'📁',n:'Rename 10 files',recur:'weekly'},
-  {e:'🗑️',n:'Empty computer trash',recur:'weekly'},
-  {e:'📱',n:'Empty phone trash',recur:'weekly'},
-  {e:'🖥️',n:'Organize desktop 5 minutes',recur:'weekly'},
-  {e:'📷',n:'Delete duplicate photos',recur:'weekly'},
-  {e:'📂',n:'Organize one Google Drive folder',recur:'weekly'},
-  {e:'📥',n:'Clean downloads folder',recur:'weekly'},
-  {e:'📅',n:'Update calendar 5 minutes',recur:'weekly'},
-  {e:'🌐',n:'Clear browser tabs',recur:'weekly'},
-  {e:'🔖',n:'Bookmark useful websites',recur:'weekly'},
-  {e:'📱',n:'Delete unused apps',recur:'weekly'},
-  {e:'📧',n:'Respond to 3 emails',recur:'weekly'},
-  {e:'🎙️',n:'Delete old voice memos',recur:'weekly'},
-  {e:'📸',n:'Back up phone photos',recur:'weekly'},
-  {e:'🧽',n:'Wipe bathroom counter',recur:'weekly'},
-  {e:'🪞',n:'Clean bathroom mirror',recur:'weekly'},
-  {e:'🧺',n:'Put away clean laundry',recur:'weekly'},
-  {e:'👕',n:'Fold 10 clothing items',recur:'weekly'},
-  {e:'🗑️',n:'Empty one trash can',recur:'weekly'},
-  {e:'🧹',n:'Wipe kitchen counters',recur:'weekly'},
-  {e:'🍽️',n:'Load dishwasher',recur:'weekly'},
-  {e:'🍽️',n:'Unload dishwasher',recur:'weekly'},
-  {e:'🫙',n:'Clean microwave',recur:'weekly'},
-  {e:'🧹',n:'Sweep one room',recur:'weekly'},
-  {e:'🪣',n:'Dust one surface',recur:'weekly'},
-  {e:'🗂️',n:'Declutter one drawer',recur:'weekly'},
-  {e:'📚',n:'Organize one shelf',recur:'weekly'},
-  {e:'🪴',n:'Water plants',recur:'weekly'},
-  {e:'🧴',n:'Refill soap dispensers',recur:'weekly'},
-  {e:'🧊',n:'Clean out fridge leftovers',recur:'weekly'},
-  {e:'♻️',n:'Take out recycling',recur:'weekly'},
-  {e:'📅',n:'Add one event to calendar',recur:'weekly'},
-  {e:'💄',n:'Wash makeup brushes',recur:'weekly'},
-  {e:'💇',n:'Clean hairbrush',recur:'weekly'},
-  {e:'💊',n:'Refill vitamins',recur:'weekly'},
-  {e:'🫙',n:'Wash water bottle',recur:'weekly'},
-  {e:'🧘',n:'Stretch for 5 minutes',recur:'weekly'},
-  {e:'💧',n:'Drink a glass of water',recur:'weekly'},
-  {e:'🧴',n:'Put away toiletries',recur:'weekly'},
-  {e:'💍',n:'Clean jewelry',recur:'weekly'},
-  {e:'👕',n:'Find 1 clothing to donate',recur:'weekly'},
-  {e:'🗑️',n:'Throw away obvious trash',recur:'weekly'},
-  {e:'🚪',n:'Wipe one door',recur:'weekly'},
-  {e:'🧺',n:'Organize one small basket',recur:'weekly'},
-  {e:'🏠',n:"Put everything back in its home 5 minutes",recur:'weekly'},
-];
-const DEF_WEEKLY={
-  Mon:{theme:'Reset and life admin',tasks:[
-    {e:'📋',n:'Plan next week',pri:1,recur:'weekly'},
-    {e:'💰',n:'Financial organisation',pri:1,recur:'weekly'},
-    {e:'💊',n:'Refill pills',pri:2,recur:'weekly'},
-    {e:'🍱',n:'Meal prep',pri:2,recur:'weekly'},
-    {e:'🥤',n:'Drink prep',pri:3,recur:'weekly'},
-    {e:'🛒',n:'Make grocery list',pri:3,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Tue:{theme:'Movement and money',tasks:[
-    {e:'🧹',n:'Mop floors',pri:1,recur:'weekly'},
-    {e:'🌀',n:'Vacuum',pri:1,recur:'weekly'},
-    {e:'📅',n:'Put things into calendar',pri:2,recur:'weekly'},
-    {e:'💍',n:'Go through jewelry',pri:2,recur:'weekly'},
-    {e:'💅',n:'File nails',pri:3,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Wed:{theme:'Home systems',tasks:[
-    {e:'👗',n:'Organize closet',pri:1,recur:'weekly'},
-    {e:'📧',n:'Organize emails',pri:1,recur:'weekly'},
-    {e:'💼',n:'Apply for jobs',pri:2,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Thu:{theme:'Work and digital structure',tasks:[
-    {e:'🗂️',n:'Organize desk',pri:1,recur:'weekly'},
-    {e:'👟',n:'Clean shoes',pri:2,recur:'weekly'},
-    {e:'🧊',n:'Clean fridge',pri:2,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Fri:{theme:'Cleanup and admin closure',tasks:[
-    {e:'🚿',n:'Clean sink area',pri:1,recur:'weekly'},
-    {e:'🗄️',n:'Clean cabinets',pri:2,recur:'weekly'},
-    {e:'📭',n:'Clean spam folder',pri:2,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Sat:{theme:'Deep home reset',tasks:[
-    {e:'🪣',n:'Organize under sink area',pri:1,recur:'weekly'},
-    {e:'📂',n:'Organize Google Drive folder',pri:2,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
-  Sun:{theme:'Reset and planning',tasks:[
-    {e:'🗑️',n:'Take garbage out',pri:1,recur:'weekly'},
-    {e:'🚽',n:'Clean toilet',pri:1,recur:'weekly'},
-    {e:'💧',n:'Drink 1 full water bottle',pri:3,recur:'weekly'},
-  ]},
+const ICONS = {
+  sweater:'M8 3l-3 2v4l2-1v11h10V8l2 1V5l-3-2-2 2h-4l-2-2z',
+  dress:'M9 3l-1 4-3 12h14l-3-12-1-4-3 2-3-2z',
+  jacket:'M7 4L3 7v5l3-1v10h12V11l3 1V7l-4-3-3 2h-4l-3-2z',
+  pants:'M6 3h12l1 18h-5l-1-11-1 11H7L6 3z',
+  shoe:'M3 17c0-2 2-3 4-4l6-5 2 2-3 3h7c2 0 3 1 3 3v1H3v-0z',
+  bag:'M6 8h12l1 13H5L6 8zM9 8V6a3 3 0 016 0v2',
+  jewel:'M12 3l4 5-4 13-4-13 4-5zM3 8h18',
+  lamp:'M9 3h6l2 6H7l2-6zM12 9v9m-4 3h8',
+  sofa:'M4 12v6h16v-6M3 12a2 2 0 012-2h14a2 2 0 012 2v2H3v-2zM6 10V8a2 2 0 012-2h8a2 2 0 012 2v2',
+  rug:'M3 6h18v12H3zM3 10h18M3 14h18M7 6v12M17 6v12',
+  plant:'M12 21V10M12 10c-4 0-6-3-6-6 4 0 6 3 6 6zm0 0c0-4 3-6 6-6 0 4-3 6-6 6z',
+  blanket:'M3 6h18v6c0 4-4 6-9 6s-9-2-9-6V6zM3 9h18',
 };
-const DAYS_S=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const DAYS_F=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-// ── STATE ─────────────────────────────────────────────────
-let fixedTasks=[],fixedIdx=0,fixedDoneCount=0;
-let aftTasks=[],aftIdx=0;
-let eveTasks=[],eveIdx=0;
-let shufflePool=[],shuffleOrder=[],shuffleCursor=0;
-let weeklyData={},weeklyFocus='',weeklyFocusDone=false;
-let top3=[],otherTasks=[],doneCount=0;
-let selDay='Mon',awPriVal=1,atPriVal=1;
-let ovState={1:false,2:false,3:false};
-let isRec=false,recObj=null;
-let capturedItems=[];
-let dragSrc=null;
-// timer
-let timerSecs=600,timerRunning=false,timerInterval=null;
-
-// ── STORAGE ───────────────────────────────────────────────
-function save(){
-  try{
-    localStorage.setItem('mf4_fixed',JSON.stringify(fixedTasks));
-    localStorage.setItem('mf4_aft',JSON.stringify(aftTasks));
-    localStorage.setItem('mf4_eve',JSON.stringify(eveTasks));
-    localStorage.setItem('mf4_shuffle',JSON.stringify(shufflePool));
-    localStorage.setItem('mf4_weekly',JSON.stringify(weeklyData));
-    localStorage.setItem('mf4_focus',JSON.stringify({text:weeklyFocus,done:weeklyFocusDone}));
-    localStorage.setItem('mf4_shstate',JSON.stringify({order:shuffleOrder,cursor:shuffleCursor,week:weekKey()}));
-    localStorage.setItem('mf4_day',JSON.stringify({date:new Date().toDateString(),fixedIdx,fixedDoneCount,aftIdx,eveIdx,top3,otherTasks,doneCount}));
-  }catch(e){}
+function icon(name, color, size=34){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[name]||ICONS.sweater}"/></svg>`;
 }
-function weekKey(){const d=new Date();return d.getFullYear()+'-'+Math.floor((d-new Date(d.getFullYear(),0,1))/(7*864e5));}
-function clone(o){return JSON.parse(JSON.stringify(o));}
+const CATEGORIES = [
+  {id:'tshirt', label:'T-Shirts', icon:'sweater', noun:'Tee', group:'fashion', sizes:['XS','S','M','L','XL']},
+  {id:'sweater', label:'Sweaters', icon:'sweater', noun:'Sweater', group:'fashion', sizes:['XS','S','M','L']},
+  {id:'jacket', label:'Jackets', icon:'jacket', noun:'Jacket', group:'fashion', sizes:['XS','S','M','L']},
+  {id:'jeans', label:'Jeans', icon:'pants', noun:'Jean', group:'fashion', sizes:['24','26','28','30','32']},
+  {id:'dress', label:'Dresses', icon:'dress', noun:'Dress', group:'fashion', sizes:['XS','S','M','L']},
+  {id:'skirt', label:'Skirts', icon:'dress', noun:'Skirt', group:'fashion', sizes:['XS','S','M','L']},
+  {id:'shoe', label:'Shoes', icon:'shoe', noun:'Flat', group:'fashion', sizes:['36','37','38','39','40']},
+  {id:'bag', label:'Bags', icon:'bag', noun:'Bag', group:'fashion', sizes:['One size']},
+  {id:'jewelry', label:'Jewelry', icon:'jewel', noun:'Earring', group:'fashion', sizes:['One size']},
+  {id:'sofa', label:'Sofas', icon:'sofa', noun:'Sofa', group:'home', sizes:['One size']},
+  {id:'lamp', label:'Lighting', icon:'lamp', noun:'Lamp', group:'home', sizes:['One size']},
+  {id:'rug', label:'Rugs', icon:'rug', noun:'Rug', group:'home', sizes:['5x7','8x10']},
+  {id:'blanket', label:'Textiles', icon:'blanket', noun:'Throw', group:'home', sizes:['One size']},
+  {id:'plant', label:'Plants', icon:'plant', noun:'Plant', group:'home', sizes:['One size']},
+];
+const ADJECTIVES = ['Brushed','Relaxed','Tailored','Soft','Draped','Textured','Fluid','Structured','Classic','Airy','Cropped','Oversized','Fitted','Woven','Cozy','Cloud'];
+const BRANDS = ['Amara & Co','Field Studio','Solene','Maison Field','Ilsa','Loelle','Corda','Norr','Hearth Home','Verdant','Solstice','Rowan Lane'];
+const REASONS = ['Matches your palette','Matches your aesthetic','Available in your size','Within your budget','Trending in your feed'];
 
-function load(){
-  try{
-    fixedTasks=JSON.parse(localStorage.getItem('mf4_fixed'))||clone(DEF_FIXED);
-    aftTasks=JSON.parse(localStorage.getItem('mf4_aft'))||clone(DEF_AFT);
-    eveTasks=JSON.parse(localStorage.getItem('mf4_eve'))||clone(DEF_EVE);
-    shufflePool=JSON.parse(localStorage.getItem('mf4_shuffle'))||clone(DEF_SHUFFLE);
-    weeklyData=JSON.parse(localStorage.getItem('mf4_weekly'))||clone(DEF_WEEKLY);
-    const fc=JSON.parse(localStorage.getItem('mf4_focus')||'{}');
-    weeklyFocus=fc.text||'';weeklyFocusDone=fc.done||false;
-    // shuffle state
-    const ss=JSON.parse(localStorage.getItem('mf4_shstate')||'{}');
-    if(ss.week===weekKey()&&ss.order){shuffleOrder=ss.order;shuffleCursor=ss.cursor||0;}
-    else resetShuffleOrder();
-    // day state
-    const ds=JSON.parse(localStorage.getItem('mf4_day')||'{}');
-    if(ds.date===new Date().toDateString()){
-      fixedIdx=ds.fixedIdx||0;fixedDoneCount=ds.fixedDoneCount||0;
-      aftIdx=ds.aftIdx||0;eveIdx=ds.eveIdx||0;
-      top3=ds.top3||[];otherTasks=ds.otherTasks||[];doneCount=ds.doneCount||0;
-    } else {
-      fixedIdx=0;fixedDoneCount=0;aftIdx=0;eveIdx=0;doneCount=0;
-      buildDayTasks();
-      // pull tomorrow queue
-      try{const q=JSON.parse(localStorage.getItem('mf4_tomorrow')||'[]');q.forEach(t=>top3.push({...t,done:false}));localStorage.removeItem('mf4_tomorrow');}catch(e){}
-    }
-  }catch(e){
-    fixedTasks=clone(DEF_FIXED);aftTasks=clone(DEF_AFT);eveTasks=clone(DEF_EVE);
-    shufflePool=clone(DEF_SHUFFLE);weeklyData=clone(DEF_WEEKLY);
-    buildDayTasks();resetShuffleOrder();
+function seedRand(seed){ const x=Math.sin(seed)*10000; return x-Math.floor(x); }
+function generateProduct(cat, idx){
+  const s = idx + cat.id.length*13;
+  const adj = ADJECTIVES[idx % ADJECTIVES.length];
+  const brand = BRANDS[Math.floor(seedRand(s)*BRANDS.length)];
+  const color = PALETTE[idx % PALETTE.length];
+  const price = 28 + Math.floor(seedRand(s*2)*170);
+  const match = 82 + Math.floor(seedRand(s*3)*17);
+  const rating = (3.8 + seedRand(s*4)*1.1).toFixed(1);
+  const aesthetic = AESTHETICS[Math.floor(seedRand(s*5)*AESTHETICS.length)].name;
+  const reasons = [REASONS[idx%REASONS.length], REASONS[(idx+2)%REASONS.length]];
+  return { id:`${cat.id}-${idx}`, name:`${adj} ${cat.noun}`, brand, price, hex:color.hex, colorName:color.name,
+    icon:cat.icon, sizes:cat.sizes, match, rating, aesthetic, reasons, category:cat.id, categoryLabel:cat.label };
+}
+function catById(id){ return CATEGORIES.find(c=>c.id===id); }
+function tint(hex){ return `color-mix(in srgb, ${hex} 24%, var(--cream))`; }
+
+function buildCuratedPool(n=28){
+  const pool=[]; let i=0;
+  while(pool.length<n){
+    const cat = CATEGORIES[pool.length % (CATEGORIES.length-3)]; // bias toward fashion
+    pool.push(generateProduct(cat, i)); i++;
   }
-}
-function resetShuffleOrder(){shuffleOrder=shufflePool.map((_,i)=>i).sort(()=>Math.random()-.5);shuffleCursor=0;}
-
-function buildDayTasks(){
-  const dk=DAYS_S[new Date().getDay()];
-  const raw=clone((weeklyData[dk]||{tasks:[]}).tasks).sort((a,b)=>a.pri-b.pri);
-  let all=raw.map(t=>({...t,done:false,id:uid()}));
-  if(all.length>5){
-    const p1=all.filter(t=>t.pri===1),p2=all.filter(t=>t.pri===2),p3=all.filter(t=>t.pri===3);
-    const keep=[...p1,...p2,...p3].slice(0,5);
-    const kick=[...p1,...p2,...p3].slice(5);
-    try{const q=JSON.parse(localStorage.getItem('mf4_tomorrow')||'[]');kick.forEach(t=>q.push(t));localStorage.setItem('mf4_tomorrow',JSON.stringify(q));}catch(e){}
-    all=keep;
-  }
-  top3=all.slice(0,4);otherTasks=all.slice(4);
-}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-
-// ── CLOCK ─────────────────────────────────────────────────
-function tick(){
-  const now=new Date(),h=now.getHours(),m=now.getMinutes();
-  document.getElementById('clock').textContent=`${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;
-  document.getElementById('greeting').textContent=`Good ${h<12?'morning':h<17?'afternoon':'evening'}, Addie`;
+  return pool.sort((a,b)=>b.match-a.match);
 }
 
-// ── NAV ───────────────────────────────────────────────────
-function goTo(name){
-  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('scr-'+name).classList.add('on');
-  const tab=document.getElementById('tab-'+name);if(tab)tab.classList.add('on');
-  if(name==='today')renderToday();
-  if(name==='settings')renderSettings();
-}
+/* ================= STATE ================= */
+const state = {
+  screen:'welcome',
+  selectedAesthetics:['Soft Feminine','Quiet Luxury'],
+  saved:new Set(),
+  liked:new Set(),
+  disliked:new Set(),
+  swipeCount:0,
+  curatedPool:buildCuratedPool(28),
+  discoverIndex:0,
+  showCheckIn:false,
+  activeFilter:'All',
+  categoryBatches:{},
+  currentCategory:null,
+  currentProduct:null,
+  detailReturn:'shop',
+  collectionsView:'mood',
+  toast:null,
+};
 
-// ── FIXED (morning one-at-a-time) ─────────────────────────
-function renderFixed(){
-  document.getElementById('fixed-total').textContent=fixedTasks.length;
-  document.getElementById('fixed-count').textContent=fixedDoneCount;
-  if(fixedIdx>=fixedTasks.length){
-    document.getElementById('phase-fixed').style.display='none';
-    document.getElementById('phase-main').style.display='block';
-    document.getElementById('morning-sub').textContent=fixedDoneCount+' of '+fixedTasks.length+' done 🌸';
-    renderPhaseMain();return;
-  }
-  const t=fixedTasks[fixedIdx];
-  document.getElementById('fc-em').textContent=t.e;
-  document.getElementById('fc-nm').textContent=t.n;
-  document.getElementById('fc-dr').textContent=t.d||'';
-  // Show tidy timer if this step is the tidy-up step
-  document.getElementById('tidy-timer').style.display=t.isTidy?'block':'none';
-  if(t.isTidy)timerReset();
-  renderFixedDots();
-}
-function renderFixedDots(){
-  const el=document.getElementById('fixed-dots');el.innerHTML='';
-  fixedTasks.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i<fixedIdx?' done':i===fixedIdx?' cur':'');el.appendChild(d);});
-}
-function doneFixed(){if(fixedIdx<fixedTasks.length){fixedDoneCount++;fixedIdx++;if(timerRunning)timerStop();save();renderFixed();}}
-function skipFixed(){if(fixedIdx<fixedTasks.length){fixedIdx++;if(timerRunning)timerStop();save();renderFixed();}}
+function go(screen, opts={}){ Object.assign(state, opts); state.screen=screen; render(); const el=document.getElementById('app'); if(el) el.scrollTop=0; }
+function showToast(msg){ state.toast=msg; render(); setTimeout(()=>{ state.toast=null; const t=document.getElementById('toast'); if(t) t.style.opacity=0; }, 1800); }
 
-// ── TIMER ─────────────────────────────────────────────────
-function timerStart(){
-  if(timerRunning)return;
-  timerRunning=true;
-  document.getElementById('timer-start-btn').textContent='⏸ Pause';
-  document.getElementById('timer-start-btn').onclick=timerStop;
-  timerInterval=setInterval(()=>{
-    if(timerSecs<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timer-display').textContent='Done! ✓';document.getElementById('timer-start-btn').textContent='▶ Start';document.getElementById('timer-start-btn').onclick=timerStart;return;}
-    timerSecs--;
-    const m=Math.floor(timerSecs/60),s=timerSecs%60;
-    document.getElementById('timer-display').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  },1000);
-}
-function timerStop(){clearInterval(timerInterval);timerRunning=false;document.getElementById('timer-start-btn').textContent='▶ Start';document.getElementById('timer-start-btn').onclick=timerStart;}
-function timerReset(){timerStop();timerSecs=600;document.getElementById('timer-display').textContent='10:00';}
+function toggleSave(id, ev){ if(ev) ev.stopPropagation(); state.saved.has(id)?state.saved.delete(id):state.saved.add(id); render(); }
+function toggleAesthetic(name){ const i=state.selectedAesthetics.indexOf(name); if(i>-1) state.selectedAesthetics.splice(i,1); else state.selectedAesthetics.push(name); render(); }
 
-// ── PHASE MAIN ────────────────────────────────────────────
-function renderPhaseMain(){
-  document.getElementById('m-count').textContent=doneCount;
-  renderFocusPin();renderTop3();renderOther();checkPost();
-}
-function renderFocusPin(){
-  const w=document.getElementById('focus-pin-wrap');w.innerHTML='';
-  if(!weeklyFocus||weeklyFocusDone)return;
-  const pin=document.createElement('div');pin.className='focus-pin';
-  pin.innerHTML=`<div class="focus-lbl">📌 This week's focus</div><div class="focus-text">${weeklyFocus}</div><div class="focus-sub">Tap to mark complete</div>`;
-  pin.onclick=()=>{if(confirm('Mark weekly focus complete?')){weeklyFocusDone=true;save();renderFocusPin();}};
-  w.appendChild(pin);
-}
-function renderTop3(){
-  const el=document.getElementById('top3-list');el.innerHTML='';
-  if(!top3.length){el.innerHTML='<div style="font-size:13px;color:#b09888;padding:8px 0;">No priorities today. Add some in Capture.</div>';return;}
-  top3.forEach((t,i)=>{
-    const r=document.createElement('div');r.className='row'+(t.done?' done-row':'');
-    r.innerHTML=`<span class="row-em">${t.e||'⭐'}</span><div style="flex:1;min-width:0;" onclick="toggleTop3(${i})"><div class="row-text">${t.n}</div>${t.recur==='once'?'<div class="row-sub">One time</div>':''}</div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="pb pb${t.pri||3}">${t.pri||''}</div><button class="not-btn" onclick="notToday(${i})">Not today</button><div class="chk${t.done?' on':''}" onclick="toggleTop3(${i})">${t.done?'✓':''}</div></div>`;
-    el.appendChild(r);
-  });
-}
-function renderOther(){
-  const el=document.getElementById('other-list');el.innerHTML='';
-  if(!otherTasks.length){el.innerHTML='<div style="font-size:13px;color:#b09888;padding:4px 0;">Nothing else today.</div>';return;}
-  otherTasks.forEach((t,i)=>{
-    const r=document.createElement('div');r.className='row'+(t.done?' done-row':'');
-    r.innerHTML=`<span class="row-em">${t.e||'📋'}</span><div style="flex:1;min-width:0;" onclick="toggleOther(${i})"><div class="row-text">${t.n}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="pb pb${t.pri||3}">${t.pri||''}</div><button class="not-btn" onclick="notTodayOther(${i})">Not today</button><div class="chk${t.done?' on':''}" onclick="toggleOther(${i})">${t.done?'✓':''}</div></div>`;
-    el.appendChild(r);
-  });
-}
-function toggleTop3(i){top3[i].done=!top3[i].done;doneCount+=top3[i].done?1:-1;doneCount=Math.max(0,doneCount);save();renderPhaseMain();}
-function toggleOther(i){otherTasks[i].done=!otherTasks[i].done;doneCount+=otherTasks[i].done?1:-1;doneCount=Math.max(0,doneCount);save();renderPhaseMain();}
-function notToday(i){pushTomorrow(top3[i]);top3.splice(i,1);save();renderPhaseMain();}
-function notTodayOther(i){pushTomorrow(otherTasks[i]);otherTasks.splice(i,1);save();renderPhaseMain();}
-function pushTomorrow(t){try{const q=JSON.parse(localStorage.getItem('mf4_tomorrow')||'[]');q.push(t);localStorage.setItem('mf4_tomorrow',JSON.stringify(q));}catch(e){}}
+function openCategory(catId){ if(!state.categoryBatches[catId]) state.categoryBatches[catId]=1; go('categoryDetail', {currentCategory:catId}); }
+function loadMoreCategory(){ state.categoryBatches[state.currentCategory]++; render(); }
+function openProduct(p, from){ go('productDetail', {currentProduct:p, detailReturn:from}); }
 
-function checkPost(){
-  const done=top3.length>0&&top3.every(t=>t.done);
-  document.getElementById('shuffle-section').style.display=done?'block':'none';
-  document.getElementById('afternoon-section').style.display=done?'block':'none';
-  if(done&&aftIdx<aftTasks.length)renderAftSection();
-  // evening shows after afternoon done
-  const aftDone=aftIdx>=aftTasks.length;
-  document.getElementById('evening-section').style.display=(done&&aftDone)?'block':'none';
-  if(done&&aftDone)renderEveSection();
+/* Discover swipe logic */
+function currentDiscoverCard(){
+  const pool = state.curatedPool;
+  return pool[state.discoverIndex % pool.length];
 }
+function discoverAction(action, ev){
+  if(ev) ev.stopPropagation();
+  const p = currentDiscoverCard();
+  if(action==='like'){ state.liked.add(p.id); state.saved.add(p.id); showToastQuiet('Added to your taste profile'); }
+  if(action==='dislike'){ state.disliked.add(p.id); }
+  if(action==='save'){ toggleSave(p.id); return; }
+  if(action==='shop'){ openProduct(p, 'discover'); return; }
+  state.swipeCount++;
+  state.discoverIndex++;
+  if(state.swipeCount>0 && state.swipeCount%5===0){ state.showCheckIn=true; }
+  render();
+}
+function showToastQuiet(msg){ state.toast=msg; }
+function dismissCheckIn(){ state.showCheckIn=false; render(); }
+function advanceDiscover(){ state.discoverIndex++; render(); }
 
-// ── AFTERNOON ─────────────────────────────────────────────
-function renderAftSection(){
-  if(aftIdx>=aftTasks.length){
-    const sec=document.getElementById('afternoon-section');
-    sec.innerHTML='<div class="divider"></div><div style="background:#e8f0e4;border-radius:14px;padding:13px;text-align:center;"><div style="font-size:14px;font-weight:600;color:#3d6e28;">Afternoon routine complete ✓</div></div>';
-    // now show evening
-    document.getElementById('evening-section').style.display='block';
-    renderEveSection();return;
-  }
-  const t=aftTasks[aftIdx];
-  document.getElementById('ac-em').textContent=t.e;
-  document.getElementById('ac-nm').textContent=t.n;
-  renderAftDots();
-}
-function renderAftDots(){
-  const el=document.getElementById('aft-dots');if(!el)return;el.innerHTML='';
-  aftTasks.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i<aftIdx?' done':i===aftIdx?' cur':'');el.appendChild(d);});
-}
-function doneAft(){if(aftIdx<aftTasks.length){aftIdx++;save();renderAftSection();checkPost();}}
-function skipAft(){if(aftIdx<aftTasks.length){aftIdx++;save();renderAftSection();checkPost();}}
-
-// ── EVENING ───────────────────────────────────────────────
-function renderEveSection(){
-  if(eveIdx>=eveTasks.length){
-    const sec=document.getElementById('evening-section');
-    if(sec)sec.innerHTML='<div class="divider"></div><div style="background:#e8f0e4;border-radius:14px;padding:13px;text-align:center;"><div style="font-size:14px;font-weight:600;color:#3d6e28;">Evening complete ✓ Sleep well 🌙</div></div>';
-    return;
-  }
-  const t=eveTasks[eveIdx];
-  document.getElementById('ec-em').textContent=t.e;
-  document.getElementById('ec-nm').textContent=t.n;
-  renderEveDots();
-}
-function renderEveDots(){
-  const el=document.getElementById('eve-dots');if(!el)return;el.innerHTML='';
-  eveTasks.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i<eveIdx?' done':i===eveIdx?' cur':'');el.appendChild(d);});
-}
-function doneEve(){if(eveIdx<eveTasks.length){eveIdx++;save();renderEveSection();}}
-function skipEve(){if(eveIdx<eveTasks.length){eveIdx++;save();renderEveSection();}}
-
-// ── SHUFFLE ───────────────────────────────────────────────
-function doShuffle(){
-  if(!shufflePool.length){alert('No tasks in shuffle playlist. Add some in Settings.');return;}
-  if(shuffleCursor>=shuffleOrder.length){resetShuffleOrder();}
-  const idx=shuffleOrder[shuffleCursor%shuffleOrder.length];
-  const t=shufflePool[idx];
-  if(!t){shuffleCursor++;save();doShuffle();return;}
-  document.getElementById('sh-em-d').textContent=t.e||'⭐';
-  document.getElementById('sh-nm-d').textContent=t.n;
-  openModal('shuffle');
-}
-function completeShuffleTask(){
-  const idx=shuffleOrder[shuffleCursor%shuffleOrder.length];
-  if(shufflePool[idx]?.recur==='once'){shufflePool.splice(idx,1);resetShuffleOrder();}
-  else{shuffleCursor++;if(shuffleCursor>=shuffleOrder.length){shuffleCursor=0;}}
-  doneCount++;save();renderPhaseMain();closeModal();
-}
-function nextShuffleTask(){shuffleCursor++;if(shuffleCursor>=shuffleOrder.length)shuffleCursor=0;save();closeModal();setTimeout(doShuffle,300);}
-
-// ── ADD TASK TODAY ────────────────────────────────────────
-function selAtPri(n){atPriVal=n;[1,2,3].forEach(i=>{const el=document.getElementById('atp'+i);el.className='pri-opt'+(i===n?' p'+n:'');el.style.flex='1';el.style.padding='9px';el.style.borderRadius='10px';el.style.textAlign='center';});}
-function addTaskToday(){
-  const nm=document.getElementById('at-name').value.trim();if(!nm){alert('Enter a task name.');return;}
-  const task={e:'📌',n:nm,pri:atPriVal,done:false,recur:'once',id:uid()};
-  if(atPriVal===1){if(top3.length>=4){const bumped=top3.pop();otherTasks.unshift(bumped);}top3.unshift(task);}
-  else{pushTomorrow(task);alert(`"${nm}" is P${atPriVal} — added to tomorrow.`);}
-  document.getElementById('at-name').value='';closeModal();save();renderPhaseMain();
-}
-
-// ── CAPTURE — smart split ─────────────────────────────────
-// Splits on: / | slash, comma, newline, " and ", numbered list patterns
-// Also splits on natural speech pauses detected from full-stops after short phrases
-function splitIntoTasks(raw){
-  // Step 1: split on explicit separators
-  let parts=raw.split(/\/|\n|,\s*|\s+and\s+(?=[a-z])/i);
-  // Step 2: further split on numbered list patterns like "1. " or "1) "
-  const out=[];
-  parts.forEach(p=>{
-    const sub=p.split(/\d+[\.\)]\s*/);
-    sub.forEach(s=>{const t=s.trim();if(t.length>1)out.push(t);});
-  });
+/* ================= ICONS ================= */
+function chevronLeft(c='currentColor'){ return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`; }
+function checkIcon(c='currentColor'){ return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`; }
+function heartIcon(filled,c='currentColor'){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="${filled?c:'none'}" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>`; }
+function xIcon(c='currentColor'){ return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`; }
+function bagIcon(c='currentColor', size=17){ return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 13H5L6 8zM9 8V6a3 3 0 016 0v2"/></svg>`; }
+function bookmarkIconSm(filled,c='currentColor'){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="${filled?c:'none'}" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4V4z"/></svg>`; }
+function sparkleSm(c='currentColor'){ return `<svg width="10" height="10" viewBox="0 0 24 24" fill="${c}"><path d="M12 2l2 7 7 2-7 2-2 7-2-7-7-2 7-2 2-7z"/></svg>`; }
+function starIcon(filled,c='#1C1712'){ return `<svg width="11" height="11" viewBox="0 0 24 24" fill="${filled?c:'none'}" stroke="${c}" stroke-width="1.4"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17.6l-6.1 3.4 1.5-6.8L2.2 9.5l6.9-.7L12 2.5z"/></svg>`; }
+function starsRow(rating){
+  const r = Math.round(rating*2)/2; let out='<span class="stars">';
+  for(let i=1;i<=5;i++){ out += starIcon(i<=r); }
+  out += `</span> <span style="font-size:11px; color:var(--ink-soft); font-weight:700; margin-left:3px;">${rating}</span>`;
   return out;
 }
+function plusIcon(){ return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ink-soft)" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`; }
+function homeIcon(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 8 7 2-7 2-2 8-2-8-7-2 7-2 2-8z"/></svg>`; }
+function shopGridIcon(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>`; }
+function bookmarkIconNav(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg>`; }
+function personIcon(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg>`; }
 
-function parseCapture(){
-  const raw=document.getElementById('cap-ta').value.trim();if(!raw)return;
-  const lines=splitIntoTasks(raw);
-  // Default: one-time, unranked (P3 shown but defaulted to 'once')
-  capturedItems=lines.map(l=>({text:l,pri:3,recur:'once',day:DAYS_S[new Date().getDay()]}));
-  renderCapturedItems();
-  document.getElementById('cap-parsed').style.display='block';
+/* ================= ONBOARDING SCREENS ================= */
+function screenWelcome(){
+  return `
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(170deg, #F1E5CB 0%, #E6D4AE 55%, #DCC698 100%);">
+    <div style="padding:26px 30px 0;">
+      <div class="eyebrow">A quiet kind of shopping</div>
+    </div>
+    <div style="position:relative; height:300px; margin:10px 0;">
+      <div style="position:absolute; width:210px; height:210px; border-radius:50%; background:radial-gradient(circle at 35% 30%, ${PALETTE[3].hex}, ${PALETTE[0].hex}); top:20px; left:20px; box-shadow:var(--shadow-lift);"></div>
+      <div style="position:absolute; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle at 35% 30%, ${PALETTE[2].hex}, ${PALETTE[4].hex}); top:120px; right:20px; box-shadow:var(--shadow-soft);"></div>
+      <div style="position:absolute; bottom:0; left:36px; display:flex; gap:8px;">
+        ${PALETTE.slice(0,4).map(c=>`<div style="width:34px;height:34px;border-radius:50%; background:${c.hex}; border:3px solid var(--bg);"></div>`).join('')}
+      </div>
+    </div>
+    <div style="padding:0 32px 40px;">
+      <h1 class="serif" style="font-size:44px; line-height:1.06; margin-bottom:14px;">Your Style</h1>
+      <p style="color:var(--ink-soft); font-size:14px; line-height:1.6; margin-bottom:28px; max-width:280px;">Hue reads your coloring and taste, then curates a feed of only what genuinely fits you — no endless scrolling required.</p>
+      <button class="btn-black" style="width:100%; padding:17px;" onclick="go('upload')">Shop Now →</button>
+      <div style="margin-top:14px; text-align:center;"><button class="btn-text" onclick="go('discover')">I already have an account</button></div>
+    </div>
+  </div>`;
 }
-function renderCapturedItems(){
-  const el=document.getElementById('cap-items');el.innerHTML='';
-  capturedItems.forEach((item,i)=>{
-    const div=document.createElement('div');div.className='cap-item';
-    div.innerHTML=`
-      <div class="cap-item-text">${item.text}</div>
-      <div class="cap-controls">
-        <div class="pri-opt${item.pri===1?' p1':''}" onclick="setCapPri(${i},1)">🔴 P1</div>
-        <div class="pri-opt${item.pri===2?' p2':''}" onclick="setCapPri(${i},2)">🟠 P2</div>
-        <div class="pri-opt${item.pri===3?' p3':''}" onclick="setCapPri(${i},3)">🟣 P3</div>
-        <div class="rec-toggle${item.recur==='weekly'?' on':''}" onclick="toggleCapRecur(${i})">${item.recur==='weekly'?'↻ Weekly':'1× Once'}</div>
-        <select onchange="capturedItems[${i}].day=this.value" style="border:1px solid #e8e0d4;border-radius:7px;padding:4px 6px;font-size:11px;color:#3d2e24;background:#faf8f4;outline:none;">
-          ${DAYS_S.map(d=>`<option value="${d}"${item.day===d?' selected':''}>${d}</option>`).join('')}
-        </select>
-        <button class="save-cap-btn" onclick="saveSingleCap(${i})">Save</button>
-      </div>`;
-    el.appendChild(div);
-  });
+
+function screenUpload(){
+  return `
+  <div class="top-bar"><div class="icon-btn" onclick="go('welcome')">${chevronLeft()}</div><div class="eyebrow">Step 1 of 3</div><div style="width:36px"></div></div>
+  <div style="flex:1; padding:20px 28px 36px; display:flex; flex-direction:column;">
+    <h2 class="serif" style="font-size:28px; margin-bottom:10px;">Let's find your palette</h2>
+    <p style="color:var(--ink-soft); font-size:14px; line-height:1.6; margin-bottom:26px;">A clear, well-lit selfie helps us read your skin tone, undertone and contrast. Prefer not to upload one? A short quiz works just as well.</p>
+    <div class="card" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:30px; border:1.5px dashed var(--line); min-height:250px;">
+      <div style="width:84px;height:84px;border-radius:50%; background:linear-gradient(135deg,${PALETTE[0].hex},${PALETTE[3].hex}); display:flex; align-items:center; justify-content:center;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      </div>
+      <p style="font-size:13px; color:var(--ink-soft); text-align:center; max-width:220px;">Your photo is used only to analyze your coloring, and is never shared.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:22px;">
+      <button class="btn-black" onclick="go('analyzing')">Upload a Selfie</button>
+      <button class="btn-secondary" onclick="go('analyzing')">Take a Selfie</button>
+      <button class="btn-text" style="margin-top:2px;" onclick="go('analyzing')">Take a short quiz instead</button>
+    </div>
+  </div>`;
 }
-function setCapPri(i,p){capturedItems[i].pri=p;renderCapturedItems();}
-function toggleCapRecur(i){capturedItems[i].recur=capturedItems[i].recur==='weekly'?'once':'weekly';renderCapturedItems();}
-function saveSingleCap(i){
-  const item=capturedItems[i];
-  const task={e:'📌',n:item.text,pri:item.pri,recur:item.recur};
-  if(!weeklyData[item.day])weeklyData[item.day]={theme:'',tasks:[]};
-  weeklyData[item.day].tasks.push(task);
-  const todayKey=DAYS_S[new Date().getDay()];
-  if(item.pri===1&&item.day===todayKey){
-    top3.unshift({...task,done:false,id:uid()});
-    if(top3.length>4){const b=top3.pop();otherTasks.unshift(b);}
+
+function screenAnalyzing(){
+  setTimeout(()=>{ if(state.screen==='analyzing'){ go('skinResults'); } }, 2000);
+  return `
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center;">
+    <div style="position:relative; width:88px; height:88px; margin-bottom:220px; z-index:2;">
+      <div style="width:100%;height:100%; border-radius:50%; background:linear-gradient(160deg, #E3B79A, #C98F6E); box-shadow:0 10px 26px rgba(180,130,90,0.3); position:relative;">
+        <div style="position:absolute; inset:-6px; border:1.5px dashed rgba(28,23,18,0.35); border-radius:50%; animation:spin 6s linear infinite;"></div>
+      </div>
+    </div>
+    <div style="position:absolute; top:120px;">
+      <h2 class="serif" style="font-size:24px; margin-bottom:10px;">Reading your coloring…</h2>
+      <p style="color:var(--ink-soft); font-size:13.5px; line-height:1.6;">Checking undertone, contrast and depth to build a palette that's truly yours.</p>
+    </div>
+  </div>
+  <style>@keyframes spin{ to{ transform:rotate(360deg);} }</style>`;
+}
+
+function screenSkinResults(){
+  return `
+  <div class="top-bar"><div class="icon-btn" onclick="go('upload')">${chevronLeft()}</div><div class="eyebrow">Step 2 of 3</div><div style="width:36px"></div></div>
+  <div style="flex:1; padding:12px 28px 36px;">
+    <div style="display:flex; justify-content:center; margin:12px 0 22px;">
+      <div style="width:92px;height:92px;border-radius:50%; background:linear-gradient(160deg,#E3B79A,#C98F6E); box-shadow:0 10px 26px rgba(180,130,90,0.3);"></div>
+    </div>
+    <h2 class="serif" style="font-size:26px; text-align:center; margin-bottom:6px;">Warm & Radiant</h2>
+    <p style="text-align:center; color:var(--ink-soft); font-size:12.5px; margin-bottom:24px;">This is a representative tone and may vary with lighting.</p>
+    <div class="card" style="padding:20px; display:flex; flex-direction:column; gap:16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13.5px; font-weight:700;">Undertone</span><span class="chip selected" style="cursor:default; padding:6px 14px;">Warm</span></div>
+      <div style="height:1px; background:var(--line);"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13.5px; font-weight:700;">Contrast</span><span class="chip selected" style="cursor:default; padding:6px 14px;">Medium</span></div>
+      <div style="height:1px; background:var(--line);"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13.5px; font-weight:700;">Hair & Eyes</span><span style="font-size:13px; color:var(--ink-soft);">Warm brown · Hazel</span></div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft); line-height:1.6; text-align:center; padding:0 8px;">These shades naturally enhance your features — softer, warmer hues tend to bring out your glow.</p>
+    <button class="btn-black" style="width:100%; margin-top:26px;" onclick="go('palette')">See My Color Palette</button>
+  </div>`;
+}
+
+function screenPalette(){
+  return `
+  <div class="top-bar"><div class="icon-btn" onclick="go('skinResults')">${chevronLeft()}</div><div class="eyebrow">Step 2 of 3</div><div style="width:36px"></div></div>
+  <div style="flex:1; padding:12px 28px 36px;">
+    <h2 class="serif" style="font-size:26px; margin-bottom:6px;">Your Palette</h2>
+    <p style="color:var(--ink-soft); font-size:13px; margin-bottom:18px; line-height:1.6;">Warm, muted tones that echo your natural coloring.</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      ${PALETTE.map(c=>`<div style="width:calc(33.333% - 7px);"><div style="aspect-ratio:1; border-radius:16px; background:${c.hex};"></div><div style="text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:6px; font-weight:600;">${c.name}</div></div>`).join('')}
+    </div>
+    <div style="margin-top:22px; margin-bottom:8px; font-size:12.5px; font-weight:700; color:var(--ink-soft);">Wear with a lighter hand</div>
+    <div style="display:flex; gap:10px;">
+      ${AVOID.map(c=>`<div style="flex:1;"><div style="aspect-ratio:1; border-radius:16px; background:${c.hex}; opacity:.7;"></div><div style="text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:6px; font-weight:600;">${c.name}</div></div>`).join('')}
+    </div>
+    <button class="btn-black" style="width:100%; margin-top:28px;" onclick="go('aesthetic')">Choose My Aesthetic</button>
+  </div>`;
+}
+
+function screenAesthetic(){
+  return `
+  <div class="top-bar"><div class="icon-btn" onclick="go('palette')">${chevronLeft()}</div><div class="eyebrow">Step 3 of 3</div><div style="width:36px"></div></div>
+  <div style="flex:1; padding:12px 28px 36px;">
+    <h2 class="serif" style="font-size:26px; margin-bottom:6px;">What's your taste?</h2>
+    <p style="color:var(--ink-soft); font-size:13px; margin-bottom:20px; line-height:1.6;">Pick as many as speak to you — you can blend styles. We'll keep refining as you swipe.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      ${AESTHETICS.map(a=>{ const sel=state.selectedAesthetics.includes(a.name);
+        return `<div onclick="toggleAesthetic('${a.name}')" style="cursor:pointer; border-radius:18px; overflow:hidden; position:relative; aspect-ratio:1.15; background:${a.hex}; box-shadow:${sel?'0 0 0 3px var(--black) inset':'0 0 0 1px rgba(0,0,0,0.05) inset'}; display:flex; align-items:flex-end; padding:12px;">
+          <span style="font-size:12.5px; font-weight:800; background:rgba(255,253,250,0.75); padding:5px 10px; border-radius:100px;">${a.name}</span>
+          ${sel?`<div style="position:absolute; top:8px; right:8px; width:22px;height:22px; border-radius:50%; background:var(--black); display:flex; align-items:center; justify-content:center;">${checkIcon('#fff')}</div>`:''}
+        </div>`; }).join('')}
+    </div>
+    <button class="btn-black" style="width:100%; margin-top:24px;" onclick="go('discover')">Start Discovering</button>
+  </div>`;
+}
+
+/* ================= NAV ================= */
+function bottomNav(active){
+  const items=[
+    {k:'discover', label:'Discover', icon:sparkleNavIcon},
+    {k:'shop', label:'Shop', icon:shopGridIcon},
+    {k:'collections', label:'Saved', icon:bookmarkIconNav},
+    {k:'profile', label:'Profile', icon:personIcon},
+  ];
+  return `<div class="bottom-nav">${items.map(it=>`<div class="nav-item ${active===it.k?'active':''}" onclick="go('${it.k}')">${it.icon()}<span>${it.label}</span></div>`).join('')}</div>`;
+}
+function sparkleNavIcon(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.6L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.4L12 3z"/></svg>`; }
+
+/* ================= DISCOVER (TikTok-style swipe feed) ================= */
+function screenDiscover(){
+  const styleIQ = Math.min(96, 40 + state.swipeCount*3);
+  if(state.showCheckIn){
+    const top = state.selectedAesthetics[0] || 'Soft Feminine';
+    return `
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center; background:linear-gradient(160deg, ${PALETTE[0].hex}, ${PALETTE[3].hex});">
+      <div style="width:64px;height:64px;border-radius:50%; background:rgba(255,255,255,0.35); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">${sparkleSm('#fff')}</div>
+      <div class="eyebrow" style="color:rgba(255,255,255,0.85);">Taste check-in</div>
+      <h2 class="serif" style="font-size:26px; color:#fff; margin:10px 0 12px;">You're loving ${top}</h2>
+      <p style="color:rgba(255,255,255,0.9); font-size:13.5px; line-height:1.6; margin-bottom:28px;">We're leaning into warm neutrals and soft silhouettes for you. Keep going this direction, or mix in something new?</p>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-black" onclick="dismissCheckIn()">Keep it up</button>
+        <button class="btn-secondary" onclick="dismissCheckIn()">Surprise me</button>
+      </div>
+    </div>${bottomNav('discover')}`;
   }
-  capturedItems.splice(i,1);
-  if(!capturedItems.length){document.getElementById('cap-parsed').style.display='none';document.getElementById('cap-ta').value='';}
-  else renderCapturedItems();
-  save();
+  const p = currentDiscoverCard();
+  const liked = state.liked.has(p.id);
+  const saved = state.saved.has(p.id);
+  return `
+  <div style="position:relative; flex:1; background:${tint(p.hex)}; display:flex; flex-direction:column; overflow:hidden;">
+    <div style="padding:18px 20px 8px; display:flex; align-items:center; gap:10px; z-index:5;">
+      <div style="flex:1; height:4px; border-radius:100px; background:rgba(28,23,18,0.12);"><div style="width:${styleIQ}%; height:100%; border-radius:100px; background:var(--black); transition:width .4s ease;"></div></div>
+      <span style="font-size:10.5px; font-weight:800; color:var(--ink-soft); white-space:nowrap;">Style IQ ${styleIQ}%</span>
+    </div>
+    <div onclick="advanceDiscover()" style="flex:1; display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;">
+      ${icon(p.icon, '#1C171266', 110)}
+      <div class="badge-pill" style="top:14px; left:14px;">${sparkleSm('#fff')} ${p.match}% match</div>
+    </div>
+    <div style="position:absolute; right:14px; bottom:170px; display:flex; flex-direction:column; gap:16px; align-items:center; z-index:6;">
+      <div onclick="discoverAction('dislike', event)" style="width:48px;height:48px;border-radius:50%; background:rgba(255,253,250,0.92); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:var(--shadow-soft);">${xIcon('#8A7C69')}</div>
+      <div onclick="discoverAction('like', event)" style="width:56px;height:56px;border-radius:50%; background:var(--black); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:var(--shadow-lift);">${heartIcon(liked,'#fff')}</div>
+      <div onclick="discoverAction('save', event)" style="width:48px;height:48px;border-radius:50%; background:rgba(255,253,250,0.92); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:var(--shadow-soft);">${bookmarkIconSm(saved,'#8A7C69')}</div>
+      <div onclick="discoverAction('shop', event)" style="width:48px;height:48px;border-radius:50%; background:rgba(255,253,250,0.92); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:var(--shadow-soft);">${bagIcon('#8A7C69')}</div>
+    </div>
+    <div style="background:var(--ivory); border-radius:26px 26px 0 0; padding:20px 22px 18px; box-shadow:0 -10px 30px rgba(40,30,15,0.08); z-index:5;">
+      <div style="font-size:10.5px; color:var(--ink-soft); font-weight:700; margin-bottom:2px;">${p.brand} · ${p.categoryLabel}</div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+        <h3 class="serif" style="font-size:21px;">${p.name}</h3>
+        <span style="font-size:17px; font-weight:800;">$${p.price}</span>
+      </div>
+      <div style="margin-bottom:10px;">${starsRow(p.rating)}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        ${p.reasons.map(r=>`<span style="font-size:10px; color:var(--sage-deep,#5F7047); font-weight:700; background:#EEF1E6; padding:4px 9px; border-radius:100px;">✓ ${r}</span>`).join('')}
+      </div>
+      <p style="text-align:center; font-size:10.5px; color:var(--ink-faint); margin-top:12px;">Tap the photo for the next piece</p>
+    </div>
+  </div>
+  ${bottomNav('discover')}
+  ${state.toast?`<div id="toast" style="position:absolute; top:60px; left:50%; transform:translateX(-50%); background:var(--black); color:#fff; padding:9px 18px; border-radius:100px; font-size:12px; font-weight:700; z-index:99; transition:opacity .4s ease; box-shadow:var(--shadow-lift);">${state.toast}</div>`:''}
+  `;
 }
-function saveAllCaptured(){
-  const len=capturedItems.length;
-  for(let i=0;i<len;i++)saveSingleCap(0);
-  alert('All tasks saved!');
-}
-function clearCapture(){capturedItems=[];document.getElementById('cap-parsed').style.display='none';document.getElementById('cap-ta').value='';}
 
-// ── VOICE ─────────────────────────────────────────────────
-function toggleMic(){
-  const btn=document.getElementById('mic-btn'),lv=document.getElementById('voice-live');
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert('Voice works in Safari on iPhone or Chrome.');return;}
-  if(isRec){recObj&&recObj.stop();isRec=false;btn.textContent='🎤';btn.classList.remove('rec');lv.style.display='none';return;}
-  recObj=new SR();recObj.lang='en-US';recObj.continuous=true;recObj.interimResults=true;
-  // Key fix: collect finals and split by pause patterns
-  let finalBuffer='';
-  recObj.onresult=e=>{
-    let interim='',final='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';
-      else interim+=e.results[i][0].transcript;
-    }
-    lv.textContent=interim||'Listening…';
-    if(final){
-      finalBuffer+=final;
-      // append to textarea, each final result on new line so they split on parse
-      const ta=document.getElementById('cap-ta');
-      ta.value=finalBuffer.trim();
-    }
+/* ================= SHOP (categories) ================= */
+function screenShop(){
+  const fashion = CATEGORIES.filter(c=>c.group==='fashion');
+  const home = CATEGORIES.filter(c=>c.group==='home');
+  return `
+  <div style="padding:22px 24px 6px;">
+    <div class="eyebrow">Browse by category</div>
+    <h2 class="serif" style="font-size:28px; margin-top:4px;">Shop</h2>
+    <p style="font-size:13px; color:var(--ink-soft); margin-top:6px;">Every category is pre-filtered to your palette, aesthetic and size.</p>
+  </div>
+  <div style="flex:1; padding:12px 24px 20px;">
+    <div class="eyebrow" style="margin:10px 0;">Fashion</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:22px;">
+      ${fashion.map((c,i)=>`
+        <div onclick="openCategory('${c.id}')" style="cursor:pointer; text-align:center;">
+          <div style="aspect-ratio:1; border-radius:18px; background:${tint(PALETTE[i%PALETTE.length].hex)}; display:flex; align-items:center; justify-content:center; margin-bottom:6px;">${icon(c.icon,'#1C171288',30)}</div>
+          <div style="font-size:11.5px; font-weight:700;">${c.label}</div>
+        </div>`).join('')}
+    </div>
+    <div class="eyebrow" style="margin:10px 0;">Home</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+      ${home.map((c,i)=>`
+        <div onclick="openCategory('${c.id}')" style="cursor:pointer; text-align:center;">
+          <div style="aspect-ratio:1; border-radius:18px; background:${tint(PALETTE[(i+2)%PALETTE.length].hex)}; display:flex; align-items:center; justify-content:center; margin-bottom:6px;">${icon(c.icon,'#1C171288',30)}</div>
+          <div style="font-size:11.5px; font-weight:700;">${c.label}</div>
+        </div>`).join('')}
+    </div>
+  </div>
+  ${bottomNav('shop')}`;
+}
+
+function screenCategoryDetail(){
+  const cat = catById(state.currentCategory);
+  const batches = state.categoryBatches[cat.id] || 1;
+  const count = batches*20;
+  const items = Array.from({length:count}, (_,i)=>generateProduct(cat,i));
+  const filters = ['All','Best Match','Under $75','New'];
+  return `
+  <div class="top-bar"><div class="icon-btn" onclick="go('shop')">${chevronLeft()}</div><div class="eyebrow">${count}+ curated</div><div style="width:36px"></div></div>
+  <div style="padding:6px 24px 4px;">
+    <h2 class="serif" style="font-size:26px;">${cat.label}</h2>
+    <div style="display:flex; gap:8px; margin-top:14px; overflow-x:auto;">
+      ${filters.map(f=>`<div class="chip ${state.activeFilter===f?'selected':''}" onclick="state.activeFilter='${f}'; render();">${f}</div>`).join('')}
+    </div>
+  </div>
+  <div style="flex:1; padding:14px 24px 8px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+    ${items.map(p=>productCard(p,'category')).join('')}
+  </div>
+  <div style="padding:6px 24px 24px;"><button class="btn-secondary" style="width:100%;" onclick="loadMoreCategory()">Show 20 More</button></div>
+  ${bottomNav('shop')}`;
+}
+
+function productCard(p, from){
+  const saved = state.saved.has(p.id);
+  return `
+  <div class="product-card" onclick="openProduct(${JSON.stringify(p).replace(/"/g,'&quot;')}, '${from}')">
+    <div class="product-visual" style="background:${tint(p.hex)};">
+      <div class="badge-pill">${sparkleSm('#fff')} ${p.match}%</div>
+      <div class="corner-btn ${saved?'saved':''}" onclick="toggleSave('${p.id}', event)">${heartIcon(saved,'currentColor')}</div>
+      ${icon(p.icon, '#1C171277', 52)}
+    </div>
+    <div style="padding:11px 13px 14px;">
+      <div style="font-size:10.5px; color:var(--ink-soft); font-weight:700; margin-bottom:2px;">${p.brand}</div>
+      <div style="font-size:13px; font-weight:700; line-height:1.3; margin-bottom:5px;">${p.name}</div>
+      <div style="margin-bottom:6px;">${starsRow(p.rating)}</div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:14px; font-weight:800;">$${p.price}</span>
+        <span style="font-size:10px; color:var(--ink-faint);">${p.colorName}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ================= PRODUCT DETAIL ================= */
+function screenProductDetail(){
+  const p = state.currentProduct;
+  const saved = state.saved.has(p.id);
+  return `
+  <div style="position:relative;">
+    <div style="aspect-ratio:1/1.05; background:${tint(p.hex)}; display:flex; align-items:center; justify-content:center;">
+      ${icon(p.icon, '#1C171266', 120)}
+    </div>
+    <div class="icon-btn" style="position:absolute; top:18px; left:18px;" onclick="go('${state.detailReturn==='category'?'categoryDetail':state.detailReturn}')">${chevronLeft()}</div>
+    <div class="icon-btn ${saved?'':''}" style="position:absolute; top:18px; right:18px; color:${saved?'var(--berry)':'var(--ink)'};" onclick="toggleSave('${p.id}', event); render();">${heartIcon(saved,'currentColor')}</div>
+  </div>
+  <div style="flex:1; padding:22px 26px 100px;">
+    <div style="font-size:11px; color:var(--ink-soft); font-weight:700; margin-bottom:4px;">${p.brand}</div>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <h2 class="serif" style="font-size:26px; max-width:230px;">${p.name}</h2>
+      <span style="font-size:19px; font-weight:800;">$${p.price}</span>
+    </div>
+    <div style="margin:8px 0 16px;">${starsRow(p.rating)} <span style="font-size:11px; color:var(--ink-faint);">(128 reviews)</span></div>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px;">
+      ${p.reasons.map(r=>`<span style="font-size:10.5px; color:var(--sage-deep,#5F7047); font-weight:700; background:#EEF1E6; padding:4px 10px; border-radius:100px;">✓ ${r}</span>`).join('')}
+    </div>
+    <div style="margin-bottom:18px;">
+      <div class="eyebrow" style="margin-bottom:8px;">Color</div>
+      <div style="display:flex; gap:8px;">
+        ${PALETTE.slice(0,4).map((c,i)=>`<div style="width:28px;height:28px;border-radius:50%; background:${c.hex}; box-shadow:${c.hex===p.hex?'0 0 0 2px var(--black)':'0 0 0 1px rgba(0,0,0,0.08)'};"></div>`).join('')}
+      </div>
+    </div>
+    <div style="margin-bottom:22px;">
+      <div class="eyebrow" style="margin-bottom:8px;">Size</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        ${p.sizes.map((s,i)=>`<div class="chip ${i===1?'selected':''}">${s}</div>`).join('')}
+      </div>
+    </div>
+    <div style="padding:16px 18px; border-radius:16px; background:var(--cream); font-size:12.5px; color:var(--ink-soft); line-height:1.6;">
+      A ${p.colorName.toLowerCase()} piece from ${p.brand}, chosen for your ${p.aesthetic} aesthetic and warm undertone. Runs true to size.
+    </div>
+  </div>
+  <div style="position:absolute; bottom:0; left:0; right:0; background:var(--ivory); border-top:1px solid var(--line); padding:14px 22px calc(env(safe-area-inset-bottom,0) + 14px); display:flex; align-items:center; gap:12px;">
+    <div style="display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:100px; padding:8px 14px;">
+      <span style="font-size:15px; cursor:pointer;" onclick="event.stopPropagation()">−</span>
+      <span style="font-size:13px; font-weight:700;">1</span>
+      <span style="font-size:15px; cursor:pointer;" onclick="event.stopPropagation()">+</span>
+    </div>
+    <button class="btn-black" style="flex:1;" onclick="showToast('Added to bag'); render();">Add to Bag</button>
+  </div>`;
+}
+
+/* ================= COLLECTIONS ================= */
+function screenCollections(){
+  const likedItems = Array.from(state.saved).map(id=>{
+    const parts = id.split('-'); const cat = catById(parts[0]); if(!cat) return null;
+    return generateProduct(cat, parseInt(parts[1]||0));
+  }).filter(Boolean);
+  const collections=[
+    {name:'Loved by You', count:likedItems.length, hexes:[PALETTE[0].hex,PALETTE[3].hex], items:likedItems},
+    {name:'Autumn Capsule', count:12, hexes:[PALETTE[1].hex,PALETTE[3].hex], items:[]},
+    {name:'Dream Living Room', count:9, hexes:[PALETTE[2].hex,PALETTE[3].hex], items:[]},
+    {name:'Vacation Packing', count:6, hexes:[PALETTE[5].hex,PALETTE[2].hex], items:[]},
+  ];
+  return `
+  <div style="padding:22px 24px 6px;"><div class="eyebrow">Your mood boards</div><h2 class="serif" style="font-size:28px; margin-top:4px;">Saved</h2></div>
+  <div style="flex:1; padding:14px 24px 20px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+    ${collections.map(c=>`
+      <div class="card" style="overflow:hidden; cursor:pointer;" onclick="go('collections')">
+        <div style="aspect-ratio:1; background:linear-gradient(150deg, ${c.hexes[0]}, ${c.hexes[1]}); display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; padding:10px;">
+          ${c.items.slice(0,4).map(p=>icon(p.icon,'#ffffffaa',22)).join('') || icon('sweater','#ffffff88',30)}
+        </div>
+        <div style="padding:12px 14px;"><div style="font-size:13px; font-weight:700;">${c.name}</div><div style="font-size:10.5px; color:var(--ink-soft); margin-top:2px;">${c.count} pieces</div></div>
+      </div>`).join('')}
+    <div class="card" style="display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; border:1.5px dashed var(--line); box-shadow:none; aspect-ratio:0.82; cursor:pointer;">
+      ${plusIcon()}<span style="font-size:12px; color:var(--ink-soft); font-weight:700;">New Collection</span>
+    </div>
+  </div>
+  ${bottomNav('collections')}`;
+}
+
+/* ================= PROFILE ================= */
+function screenProfile(){
+  const likedCount = state.liked.size;
+  const savedCount = state.saved.size;
+  const breakdown = state.selectedAesthetics.length ? state.selectedAesthetics : ['Soft Feminine'];
+  return `
+  <div style="padding:22px 24px 6px; display:flex; align-items:center; gap:14px;">
+    <div style="position:relative; width:64px;height:64px;">
+      <div style="position:absolute; inset:-4px; border-radius:50%; background:conic-gradient(${PALETTE.map(p=>p.hex).join(',')}); opacity:.5;"></div>
+      <div style="position:absolute; inset:0; border-radius:50%; background:linear-gradient(135deg,${PALETTE[0].hex},${PALETTE[4].hex}); border:2px solid var(--bg);"></div>
+    </div>
+    <div><h2 class="serif" style="font-size:22px;">Maya</h2><div style="font-size:11.5px; color:var(--ink-soft);">Warm & Radiant · ${breakdown.join(', ')}</div></div>
+  </div>
+  <div style="display:flex; gap:10px; padding:16px 24px 4px;">
+    ${[['Swipes', state.swipeCount],['Liked', likedCount],['Saved', savedCount]].map(([k,v])=>`
+      <div class="card" style="flex:1; text-align:center; padding:12px 6px;"><div style="font-size:18px; font-weight:800;">${v}</div><div style="font-size:10px; color:var(--ink-soft); font-weight:700;">${k}</div></div>`).join('')}
+  </div>
+  <div style="padding:14px 24px; display:flex; flex-direction:column; gap:12px;">
+    <div class="card" style="padding:16px;">
+      <div class="eyebrow" style="margin-bottom:10px;">Palette</div>
+      <div style="display:flex; gap:8px;">${PALETTE.map(c=>`<div style="width:26px;height:26px;border-radius:50%; background:${c.hex};"></div>`).join('')}</div>
+    </div>
+    <div class="card" style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+      <div class="eyebrow">Your Style DNA</div>
+      ${breakdown.map((n,i)=>{ const pct=Math.round(100/breakdown.length); return `
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;"><span>${n}</span><span style="color:var(--ink-soft);">${pct}%</span></div>
+          <div style="height:6px; border-radius:100px; background:var(--line);"><div style="width:${pct}%; height:100%; border-radius:100px; background:var(--black);"></div></div>
+        </div>`; }).join('')}
+      <p style="font-size:11.5px; color:var(--ink-faint); margin-top:4px;">Refines automatically the more you swipe in Discover.</p>
+    </div>
+    <div class="card" style="padding:16px; display:flex; flex-direction:column; gap:12px;">
+      <div class="eyebrow">Sizes & Fit</div>
+      ${[['Top','M'],['Bottom','28'],['Dress','M'],['Shoe','38'],['Preferred fit','Relaxed']].map(([k,v])=>`
+        <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13px;">${k}</span><span class="chip" style="cursor:default; padding:5px 12px; font-size:11.5px;">${v}</span></div>`).join('')}
+    </div>
+  </div>
+  ${bottomNav('profile')}`;
+}
+
+/* ================= RENDER ================= */
+function render(){
+  const map={
+    welcome:screenWelcome, upload:screenUpload, analyzing:screenAnalyzing,
+    skinResults:screenSkinResults, palette:screenPalette, aesthetic:screenAesthetic,
+    discover:screenDiscover, shop:screenShop, categoryDetail:screenCategoryDetail,
+    productDetail:screenProductDetail, collections:screenCollections, profile:screenProfile,
   };
-  recObj.onerror=()=>{isRec=false;btn.textContent='🎤';btn.classList.remove('rec');lv.style.display='none';};
-  recObj.onend=()=>{if(isRec)try{recObj.start();}catch(e){isRec=false;btn.textContent='🎤';btn.classList.remove('rec');lv.style.display='none';}};
-  recObj.start();isRec=true;btn.textContent='⏹';btn.classList.add('rec');lv.style.display='block';lv.textContent='Listening…';
+  document.getElementById('app').innerHTML = map[state.screen]();
 }
-
-// ── SETTINGS ─────────────────────────────────────────────
-function renderSettings(){
-  if(weeklyFocus)document.getElementById('focus-input').value=weeklyFocus;
-  renderDragList('fixed-drag-list',fixedTasks,'fixed');
-  renderDragList('aft-drag-list',aftTasks,'aft');
-  renderDragList('eve-drag-list',eveTasks,'eve');
-  renderDragList('shuffle-drag-list',shufflePool,'shuffle');
-  renderDayTabs();renderWeeklyDayList();
-}
-function renderDragList(listId,arr,type){
-  const el=document.getElementById(listId);if(!el)return;el.innerHTML='';
-  arr.forEach((t,i)=>{
-    const row=document.createElement('div');row.className='drag-row';row.draggable=true;
-    row.innerHTML=`<span class="drag-handle">⠿</span><span class="drag-em">${t.e||'📋'}</span><span class="drag-text">${t.n}${t.d?'<br><span style="font-size:10px;color:#b09888">'+t.d+'</span>':''}</span><button class="del-btn" onclick="delItem('${type}',${i})">✕</button>`;
-    row.addEventListener('dragstart',e=>{dragSrc=i;e.dataTransfer.effectAllowed='move';row.style.opacity='.4';});
-    row.addEventListener('dragend',()=>{row.style.opacity='';renderDragList(listId,arr,type);});
-    row.addEventListener('dragover',e=>{e.preventDefault();row.style.background='#f3ece4';});
-    row.addEventListener('dragleave',()=>row.style.background='');
-    row.addEventListener('drop',e=>{e.preventDefault();row.style.background='';if(dragSrc!==null&&dragSrc!==i){const m=arr.splice(dragSrc,1)[0];arr.splice(i,0,m);dragSrc=null;save();renderDragList(listId,arr,type);}});
-    el.appendChild(row);
-  });
-}
-function delItem(type,i){
-  if(!confirm('Remove?'))return;
-  if(type==='fixed')fixedTasks.splice(i,1);
-  else if(type==='aft')aftTasks.splice(i,1);
-  else if(type==='eve')eveTasks.splice(i,1);
-  else if(type==='shuffle'){shufflePool.splice(i,1);resetShuffleOrder();}
-  save();renderSettings();
-}
-function addFixedTask(){
-  const em=document.getElementById('fe-em').value.trim()||'⭐',nm=document.getElementById('fe-nm').value.trim(),dr=document.getElementById('fe-dr').value.trim();
-  if(!nm){alert('Enter a name.');return;}
-  fixedTasks.push({e:em,n:nm,d:dr});
-  document.getElementById('fe-em').value='';document.getElementById('fe-nm').value='';document.getElementById('fe-dr').value='';
-  save();renderSettings();
-}
-function addAftTask(){
-  const em=document.getElementById('ae-em').value.trim()||'🌤',nm=document.getElementById('ae-nm').value.trim();
-  if(!nm){alert('Enter a name.');return;}
-  aftTasks.push({e:em,n:nm});
-  document.getElementById('ae-em').value='';document.getElementById('ae-nm').value='';
-  save();renderSettings();
-}
-function addEveTask(){
-  const em=document.getElementById('ee-em').value.trim()||'🌙',nm=document.getElementById('ee-nm').value.trim();
-  if(!nm){alert('Enter a name.');return;}
-  eveTasks.push({e:em,n:nm});
-  document.getElementById('ee-em').value='';document.getElementById('ee-nm').value='';
-  save();renderSettings();
-}
-function addShuffleTask(){
-  const em=document.getElementById('sh-em').value.trim()||'⭐',nm=document.getElementById('sh-nm').value.trim();
-  if(!nm){alert('Enter a name.');return;}
-  shufflePool.push({e:em,n:nm,recur:'weekly'});
-  document.getElementById('sh-em').value='';document.getElementById('sh-nm').value='';
-  resetShuffleOrder();save();renderSettings();
-}
-function renderDayTabs(){
-  const el=document.getElementById('day-tabs');el.innerHTML='';
-  DAYS_S.forEach(d=>{const t=document.createElement('div');t.className='day-tab'+(d===selDay?' on':'');t.textContent=d;t.onclick=()=>{selDay=d;renderDayTabs();renderWeeklyDayList();document.getElementById('sel-day-lbl').textContent=DAYS_F[DAYS_S.indexOf(d)];document.getElementById('save-day-lbl').textContent=DAYS_F[DAYS_S.indexOf(d)];document.getElementById('day-theme').value=(weeklyData[d]||{}).theme||'';};el.appendChild(t);});
-  document.getElementById('sel-day-lbl').textContent=DAYS_F[DAYS_S.indexOf(selDay)];
-  document.getElementById('save-day-lbl').textContent=DAYS_F[DAYS_S.indexOf(selDay)];
-  document.getElementById('day-theme').value=(weeklyData[selDay]||{}).theme||'';
-}
-function renderWeeklyDayList(){
-  const el=document.getElementById('weekly-day-list');el.innerHTML='';
-  const tasks=(weeklyData[selDay]||{tasks:[]}).tasks;
-  if(!tasks.length){el.innerHTML='<div style="font-size:13px;color:#b09888;padding:6px 0;">No tasks for this day yet.</div>';return;}
-  tasks.forEach((t,i)=>{const r=document.createElement('div');r.className='row';r.innerHTML=`<span class="row-em">${t.e||'📋'}</span><div style="flex:1;"><div class="row-text">${t.n}</div><div class="row-sub">${t.recur==='once'?'One time':'Weekly'} · P${t.pri}</div></div><div class="pb pb${t.pri}">${t.pri}</div><button class="not-btn" onclick="delWeeklyTask(${i})" style="color:#c97a7a;border-color:#f0d0d0;">✕</button>`;el.appendChild(r);});
-}
-function saveFocus(){weeklyFocus=document.getElementById('focus-input').value.trim();weeklyFocusDone=false;save();alert('Focus saved!');}
-function saveWeeklyDay(){if(!weeklyData[selDay])weeklyData[selDay]={theme:'',tasks:[]};weeklyData[selDay].theme=document.getElementById('day-theme').value.trim();save();alert(DAYS_F[DAYS_S.indexOf(selDay)]+' saved!');}
-function delWeeklyTask(i){if(confirm('Remove?')){weeklyData[selDay].tasks.splice(i,1);save();renderWeeklyDayList();}}
-
-function selAwPri(n){awPriVal=n;[1,2,3].forEach(i=>{const el=document.getElementById('awp'+i);el.className='pri-opt'+(i===n?' p'+n:'');el.style.flex='1';el.style.padding='9px';el.style.borderRadius='10px';el.style.textAlign='center';});}
-function addWeeklyTask(){
-  const nm=document.getElementById('aw-nm').value.trim();if(!nm){alert('Enter a name.');return;}
-  const em=document.getElementById('aw-em').value.trim()||'📋',recur=document.getElementById('aw-recur').value;
-  if(!weeklyData[selDay])weeklyData[selDay]={theme:'',tasks:[]};
-  weeklyData[selDay].tasks.push({e:em,n:nm,pri:awPriVal,recur});
-  document.getElementById('aw-nm').value='';document.getElementById('aw-em').value='';
-  save();closeModal();renderWeeklyDayList();
-}
-
-// ── OVERWHELMED ───────────────────────────────────────────
-function toggleOv(n){ovState[n]=!ovState[n];const r=document.getElementById('ov'+n),c=document.getElementById('ovc'+n);if(ovState[n]){r.classList.add('done-row');c.classList.add('on');c.textContent='✓';}else{r.classList.remove('done-row');c.classList.remove('on');c.textContent='';}}
-
-// ── MODAL ─────────────────────────────────────────────────
-function openModal(name){document.querySelectorAll('.modal>div[id^="modal-"]').forEach(d=>d.style.display='none');const el=document.getElementById('modal-'+name);if(el)el.style.display='block';document.getElementById('modal-bg').classList.add('on');}
-function closeModal(){document.getElementById('modal-bg').classList.remove('on');}
-
-// ── RESET ─────────────────────────────────────────────────
-function resetAll(){localStorage.clear();fixedTasks=clone(DEF_FIXED);aftTasks=clone(DEF_AFT);eveTasks=clone(DEF_EVE);shufflePool=clone(DEF_SHUFFLE);weeklyData=clone(DEF_WEEKLY);weeklyFocus='';weeklyFocusDone=false;fixedIdx=0;fixedDoneCount=0;aftIdx=0;eveIdx=0;doneCount=0;buildDayTasks();resetShuffleOrder();save();renderToday();renderSettings();alert('Reset complete.');}
-
-// ── RENDER TODAY ──────────────────────────────────────────
-function renderToday(){
-  const allDone=fixedIdx>=fixedTasks.length;
-  document.getElementById('phase-fixed').style.display=allDone?'none':'block';
-  document.getElementById('phase-main').style.display=allDone?'block':'none';
-  if(allDone){document.getElementById('morning-sub').textContent=fixedDoneCount+' of '+fixedTasks.length+' done 🌸';renderPhaseMain();}
-  else renderFixed();
-}
-
-// ── INIT ──────────────────────────────────────────────────
-load();tick();setInterval(tick,30000);
-selAtPri(1);selAwPri(1);
-renderToday();
+render();
 </script>
 </body>
 </html>
